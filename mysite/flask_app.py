@@ -1,40 +1,319 @@
 # A very simple Flask Hello World app for you to get started with...
-from flask import Flask
+import sqlite3
+import time
+from flask import Flask, request, redirect
+from datetime import datetime
+
+
+
 app = Flask(__name__)
 
-htmlFolderPath='/home/arimaysari/irasyamira/src/'
+srcPath='/home/arimaysari/irasyamira/src/'
+dbPath='/home/arimaysari/irasyamira/db/irasyamira-flask.db'
 
-headerObject0={'tag':'home','link':'/home'}
+headerObject0={'tag':'home','link':'/'}
 headerObject1={'tag':'about','link':'/about'}
-headerObject2={'tag':'contact','link':'/contact'}
-headerObject3={'tag':'cv','link':'/cv'}
-arrayHeaderObject=[headerObject0,headerObject1,headerObject2,headerObject3]
+headerObject2={'tag':'cv','link':'/cv'}
+headerObject3={'tag':'guestbook','link':'/guestbook'}
+headerObject4={'tag':'posts','link':'/posts'}
+arrayHeaderObject=[headerObject0,headerObject3,headerObject1,headerObject4,headerObject2]
 
-@app.route('/')
-def hello_world():
-    page=renderHeader()
-    page+='Hello from Flask!'
+guestCategory0={'tag':0,'label':'family','symbol':'👪'}
+guestCategory1={'tag':1,'label':'primary school','symbol':'🎒'}
+guestCategory2={'tag':2,'label':'secondary school','symbol':'🏫'}
+guestCategory3={'tag':3,'label':'college','symbol':'📚'}
+guestCategory4={'tag':4,'label':'university','symbol':'🎓'}
+guestCategory5={'tag':5,'label':'workplace','symbol':'👔'}
+guestCategory6={'tag':6,'label':'acquaintance','symbol':'😀'}
+guestCategory7={'tag':7,'label':'socials','symbol':'🍷'}
+guestCategory8={'tag':8,'label':'others','symbol':'⭐'}
+guestCategory9={'tag':9,'label':'rather not say','symbol':'🥔'}
+arrayGuestCategory=[guestCategory0,guestCategory1,guestCategory2,guestCategory3,guestCategory4,guestCategory5,guestCategory6,guestCategory7,guestCategory8,guestCategory9]
+
+'''
+guestbookTableKey0={'tag':0,'displayName':'row_id','render':0,'inputTypeTag':1}
+guestbookTableKey1={'tag':1,'displayName':'publishStatusTag','render':0,'inputTypeTag':3}
+guestbookTableKey2={'tag':2,'displayName':'dateAdded','render':0,'inputTypeTag':1}
+guestbookTableKey3={'tag':3,'displayName':'sender','render':1,'inputTypeTag':6}
+guestbookTableKey4={'tag':4,'displayName':'category','render':1,'inputTypeTag':3}
+guestbookTableKey5={'tag':5,'displayName':'others','render':1,'inputTypeTag':6}
+guestbookTableKey6={'tag':6,'displayName':'message','render':1,'inputTypeTag':6}
+'''
+guestbookTableKey0={'tag':0,'displayName':'row_id','render':0,'inputTypeTag':'hidden'}
+guestbookTableKey1={'tag':1,'displayName':'publishStatusTag','render':0,'inputTypeTag':'radio'}
+guestbookTableKey2={'tag':2,'displayName':'dateAdded','render':0,'inputTypeTag':'hidden'}
+guestbookTableKey3={'tag':3,'displayName':'sender','render':1,'inputTypeTag':'text'}
+guestbookTableKey4={'tag':4,'displayName':'category','render':1,'inputTypeTag':'radio'}
+guestbookTableKey5={'tag':5,'displayName':'others','render':1,'inputTypeTag':'text'}
+guestbookTableKey6={'tag':6,'displayName':'message','render':1,'inputTypeTag':'text'}
+arrayGuestbookTableKey=[guestbookTableKey0,guestbookTableKey1,guestbookTableKey2,guestbookTableKey3,guestbookTableKey4,guestbookTableKey5,guestbookTableKey6]
+
+inputTypeTag0={'tag':0,'inputType':'button'}
+inputTypeTag1={'tag':1,'inputType':'hidden'}
+inputTypeTag2={'tag':2,'inputType':'password'}
+inputTypeTag3={'tag':3,'inputType':'radio'}
+inputTypeTag4={'tag':4,'inputType':'search'}
+inputTypeTag5={'tag':5,'inputType':'submit'}
+inputTypeTag6={'tag':6,'inputType':'text'}
+arrayRenderType=[inputTypeTag0,inputTypeTag1,inputTypeTag2,inputTypeTag3,inputTypeTag4,inputTypeTag5,inputTypeTag6]
+
+@app.route('/', methods=['GET','POST'])
+@app.route('/<page>', methods=['GET','POST'])
+@app.route('/<page>/', methods=['GET','POST'])
+def hello_world(page=None):
+    header=renderHeader(page)
+    if (page==None):
+        contentObj=landing()
+    elif (page=='cv'):
+        contentObj=cv()
+    elif (page=='about'):
+        contentObj=about()
+    elif (page=='guestbook'):
+        contentObj=guestbook()
+    elif (page=='posts'):
+        contentObj=posts()
+    elif (page=='signGuestbook'):
+        contentObj=newEntry()
+    elif (page=='reviewEntry'):
+        contentObj=reviewEntry()
+    elif (page=='editDatabase'):
+        contentObj=guestbook(editDatabase())
+    elif (page=='home'):
+        return redirect("/")
+    else:
+        contentObj=landing()
+
+    content=contentObj['output']
+    pageName=contentObj['pageName']
+    body=content
+    page=renderHtml('page').format(pageName=pageName,header=header,body=body)
     return page
 
-def renderHeader():
+def landing():
+    folder='landing'
+    errorCode=True
+    errorMessage=None
+    pageName='Home'
+    content=''
+    try:
+        panel1=renderHtml('welcomeMessage',folder)
+        panel2=guestbook()
+        panel3=contact()
+        #panel2='Hello from Flask!'
+        content=renderHtml('landing',folder).format(panel1=panel1,panel2=panel2,panel3=panel3)
+    except Exception as e:
+        #errorMessage=str(e)
+        content='fail -'+str(e)
+    output=content
+    return {'output':output,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+
+'''
+guestbookTableKey6={'tag':6,'displayName':'message','render':1,'inputTypeTag':6}
+arrayGuestbookTableKey
+'''
+
+def guestbook(alert=None):
+    folder='guestbook'
+    errorMessage=None
+    errorCode=True
+    content=alertMessage=''
+    pageName='Guestbook'
+
+    allEntries=listEntries('guestbook',0)
+
+    try:
+        newEntry=''
+        if (alert!=None):
+            if (alert):
+                alertMessage='<body onLoad="myFunction(false);">'
+            else:
+                alertMessage='<body onLoad="myFunction(true);">'
+        #content+='alert: ' + str(not alert)
+        content+=renderHtml('guestbook',folder).format(alert=alertMessage,allEntries=allEntries,newEntry=newEntry)
+        errorCode=False
+    except Exception as e:
+        errorMessage=str(e)
+        content='fail -'+str(e)
+    output=content
+    return {'output':output,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+
+def listEntries(table='guestbook',sortBy=0,mode=None):
+    folder='entries'
+    dbObj=initDatabase()
+    db1=dbObj['cursor']
+    content=''
+    obj={}
+
+    db1.execute('SELECT * FROM {} ORDER BY epochTime DESC LIMIT 0, 49999;'.format(table))
+    ll=db1.fetchall()
+
+    try:
+        for l in ll:
+            obj=getObjectFromTable(l,table)
+            sender=obj['sender']
+            category=obj['category']
+            for guestCategory in arrayGuestCategory:
+                if category==guestCategory['tag']:
+                    symbol=guestCategory['symbol']
+            dateAdded=str(obj['dateAdded'])
+            displayDateAdded=renderHtml('displayDateAdded',folder).format(year=dateAdded[0:4],month=dateAdded[4:6],day=dateAdded[6:8])
+            message=obj['message']
+            content+=renderHtml('entry',folder).format(symbol=symbol,sender=sender,dateAdded=displayDateAdded,message=message)
+    except Exception as e:
+        errorMessage=e
+        content=str(errorMessage)
+
+    output=content
+    return output
+
+def reviewEntry():
+    folder='entries'
+    errorMessage=None
+    errorCode=True
+    content=''
+    pageName='Review Entry'
+
+    try:
+        sender=request.form['name']
+        message=request.form['message']
+        category=request.form['category']
+        for guestCategory in arrayGuestCategory:
+            if int(category)==guestCategory['tag']:
+                symbol=guestCategory['symbol']
+        displayDateAdded=datetime.today().strftime('%Y%m%d')
+        content+=renderHtml('reviewEntry',folder).format(symbol=symbol,sender=sender,displayDateAdded=displayDateAdded,message=message,publishStatusTag=1,dateAdded=displayDateAdded,category=category,others=None)
+        errorCode=False
+    except Exception as e:
+        errorMessage=str(e)
+        content='fail -'+str(e)
+    output=content
+    return {'output':output,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+
+def editDatabase(table='guestbook',newEntry=False):
+    dbObj=initDatabase()
+    db1=dbObj['cursor']
+    guestbookDb=dbObj['database']
+    errorMessage=None
+    errorCode=True
+    content=''
+    pageName='Update Guestbook'
+    try:
+        content+='sender'
+        sender=request.form['sender']
+        content+='publishStatusTag'
+        publishStatusTag=request.form['publishStatusTag']
+        content+='dateAdded'
+        dateAdded=request.form['dateAdded']
+        content+='category'
+        category=request.form['category']
+        content+='others'
+        others=request.form['others']
+        content+='message'
+        message=request.form['message']
+        epochTime=time.time()
+        try:
+            db1.execute('INSERT INTO {table} (sender,publishStatusTag,dateAdded,category,others,message,epochTime) VALUES (?,?,?,?,?,?,?);'.format(table=table), (sender,publishStatusTag,dateAdded,category,others,message,epochTime,))
+            guestbookDb.commit()
+            errorCode=False
+            content='success!'
+        except Exception as e:
+            errorMessage=str(e)
+            content='fail to commit to db -'+str(e)
+
+    except Exception as e:
+        errorMessage=str(e)
+        content+='fail to retrieve params -'+str(e)
+
+    return errorCode
+
+def getObjectFromTable(obj,table='guestbook'):
+    [row_id,publishStatusTag,dateAdded,sender,category,others,message,epochTime]=obj
+    return {'row_id':row_id,'sender':sender,'message':message,'dateAdded':dateAdded,'publishStatusTag':publishStatusTag,'category':category,'others':others,'epochTime':epochTime}
+
+def initDatabase():
+    guestbookDb=sqlite3.connect(dbPath, check_same_thread=False)
+    db1=guestbookDb.cursor()
+    return {'cursor':db1,'database':guestbookDb}
+
+def posts():
+    folder='posts'
+    errorCode=True
+    errorMessage=None
+    pageName='Posts'
+
+    try:
+        content=renderHtml('posts',folder)
+        errorCode=False
+    except Exception as e:
+        errorMessage=str(e)
+
+    output=content
+    return {'output':output,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+
+
+def about():
+    folder='about'
+    errorCode=True
+    errorMessage=None
+    pageName='About'
+
+    try:
+        content=renderHtml('about',folder)
+        errorCode=False
+    except Exception as e:
+        errorMessage=str(e)
+
+    output=content
+    return {'output':output,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+
+def contact():
+    folder='contact'
+    errorCode=True
+    errorMessage=None
+    pageName='Contact'
+
+    try:
+        content=renderHtml('contact',folder)
+    except Exception as e:
+        errorMessage=str(e)
+
+    output=content
+    #return {'output':output,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+    return output
+
+def cv():
+    folder='cv'
+    errorCode=True
+    errorMessage=None
+    pageName='CV'
+    try:
+        content=renderHtml('cv',folder)
+    except Exception as e:
+        errorMessage=str(e)
+    output=content
+    return {'output':output,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+
+def renderHeader(page=None):
     folder='header'
     output=headerObjects=''
     for obj in arrayHeaderObject:
         objectName=obj['tag']
         link=obj['link']
-        headerObjects+=renderHtml('headerObject',folder).format(link=link,pageName=objectName.upper())
+        if (str(page)==str(None)):
+            page='home'
+        if (page==objectName):
+            headerObjects+=renderHtml('headerObjectActive',folder).format(link=link,pageName=objectName.upper())
+        else:
+            headerObjects+=renderHtml('headerObject',folder).format(link=link,pageName=objectName.upper())
+        #headerObjects+='current page: ' + str(page)
     output=renderHtml('header',folder).format(headerObjects=headerObjects)
     return output
 
-# name      : ()
-# function  : ?
-# input     : ?
-# output    : ?
 def renderHtml(filename,path=None):
     if (path==None):
-        fullFilename=htmlFolderPath+filename+'.html'
+        fullFilename=srcPath+filename+'.html'
     else:
-        fullFilename=htmlFolderPath+path+'/'+filename+'.html'
+        fullFilename=srcPath+path+'/'+filename+'.html'
     file=open(fullFilename,'r')
     content=file.read()
     return content

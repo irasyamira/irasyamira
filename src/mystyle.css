@@ -1,0 +1,370 @@
+:root {
+  --blue: #1e90ff;
+  --white: #ffffff;
+  --colour0: #053742;
+  --colour1: #39A2DB;
+  --colour2: #E8F0F2;
+  --colour3: rgba(0, 0, 0,0.15);
+  --colour3: #CDF0EA;
+  --colour4: #A2DBFA;
+}
+
+/*
+https://css-tricks.com/almanac/properties/j/justify-content/#:~:text=flex%2Dend%20%3A%20items%20are%20packed,with%20equal%20space%20around%20them
+*/
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+    background-color: var(--colour0);
+    font-family: Bai Jamjuree;
+    margin: 0;
+    color: var(--colour3);
+
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    padding: 2% 20%;
+	margin: 0;
+}
+
+@media screen and (max-width: 900px) {
+    .container {
+        padding: 0;
+    	margin: 0;
+    }
+}
+
+hr {
+    border: 1px solid var(--colour3);
+}
+
+img {
+    border-radius: 1em;
+}
+
+p {
+    color: var(--colour3);
+    word-wrap: break-word;
+}
+
+a {
+    color: var(--colour3);
+    word-wrap: break-word;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+    width: 50%;
+    float: left;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.scrollable {
+    background-color: transparent;
+    overflow: auto;
+    height: 50vh;
+    padding: 0;
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 900px) {
+    .column {
+        width: 100%;
+    }
+}
+
+/*================================================================*/
+/* HEADER */
+/*================================================================*/
+
+.header {
+    border: 1px;
+}
+
+ul.sidenav {
+    list-style-type: none;
+    margin: 0;
+    display: flex;
+    justify-content: flex-start;
+}
+
+ul.sidenav li a {
+    display: block;
+    color: var(--colour3);
+    padding: 8px 16px;
+    text-decoration: none;
+    font-size: 1.5em;
+}
+
+ul.sidenav li a.active {
+    background-color: var(--colour3);
+    color: white;
+}
+
+ul.sidenav li a:hover:not(.active) {
+    background-color: var(--colour1);
+    color: white;
+}
+
+div#header hr {
+    border: 2px solid var(--colour2);
+}
+
+div#header img {
+    height: 3em;
+    padding: 0 1em;
+}
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 900px) {
+    div#header hr {
+        border: 1px solid var(--colour2);
+    }
+
+    ul.sidenav {
+        list-style-type: none;
+        margin: 0;
+        display: flex;
+        justify-content: space-evenly;
+    }
+
+}
+
+/*================================================================*/
+/* LANDING */
+/*================================================================*/
+
+.landing {
+    padding: 0 20%;
+}
+
+div#landing hr  {
+    border: 0.5px dashed var(--colour3);
+}
+
+div#landing .column {
+    border: 0 solid black;
+}
+
+div#landing .row {
+    padding: 1.5% 0;
+}
+
+div#landing img {
+    width: 100%;
+    padding: 1%;
+}
+
+div#landing .panelHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* mouse over link */
+div#landing a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 900px) {
+    .landing {
+        padding: 0 1%;
+    }
+
+    div#landing .row {
+        padding: 1.5% 1%;
+    }
+}
+
+.mySlides {
+    display:none
+
+}
+.w3-left, .w3-right, .w3-badge {
+    cursor:pointer
+}
+.w3-badge {
+    height:13px;
+    width:13px;
+    padding:0
+}
+
+/*================================================================*/
+/* ENTRY */
+/*================================================================*/
+
+.newEntry {
+    padding: 4% 4%;
+}
+
+div#newEntry .column {
+    padding: 0 2%;
+}
+
+/*================================================================*/
+/* GUESTBOOK */
+/*================================================================*/
+.entry {
+    padding: 0.5em 2em;
+    border: 1px solid var(--colour1);
+}
+
+.guestbook {
+    display: flex;
+    align-items: space-between;
+    height: 100%;
+}
+
+.guestbook-info {
+    padding: 0.5px 0em;
+    color: darkblue;
+}
+
+.guestbook-message {
+    padding: 0.2px 0em;
+}
+
+.formInput {
+    padding: 0.3em 0em;
+}
+
+.messageBox {
+}
+
+.card {
+    opacity: 0.9;
+}
+
+.cardContainer {
+    padding: 1% 5%;;
+    background-color: var(--colour2);
+    word-wrap: break-word;
+    width: 25%;
+}
+
+.cardHover {
+    padding: 2% 2%;
+    width: 80%;
+}
+
+
+div#panel marquee {
+    direction: left;
+    scrollmount: 5;
+}
+
+/*================================================================*/
+/* ABOUT */
+/*================================================================*/
+.about {
+    padding: 1.5% 3%;
+}
+
+div#about hr {
+    border: 0.3px dotted var(--colour3);
+}
+
+/* Create two equal columns that floats next to each other */
+div#about .column {
+    float: left;
+    padding: 10px;
+}
+
+div#about .left {
+    width: 35%;
+}
+
+div#about .right {
+    width: 65%;
+}
+
+/* Clear floats after the columns */
+div#about .row {
+    padding: 1.5% 5%;
+}
+
+/* Clear floats after the columns */
+div#about .row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.aboutDescription {
+    text-align: justify;
+    border: 0px solid var(--colour3);
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div#about img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1% 2%;
+    width: 100%;
+}
+
+div#about img:hover {
+    opacity: 0.5;
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 900px) {
+    div#about .column {
+        width: 100%;
+    }
+    .about {
+        padding: 0 1%;
+    }
+    div#about img {
+        padding: 1% 20%;
+    }
+}
+
+/*================================================================*/
+/* FOOTER */
+/*================================================================*/
+
+.footer {
+
+
+    margin-top: auto;
+
+}
+
+/*================================================================*/
+/* LINKS */
+/*================================================================*/
+
+/* unvisited link */
+a:link {
+  text-decoration: none;
+}
+
+/* visited link */
+a:visited {
+  text-decoration: none;
+}
+
+/* mouse over link */
+a:hover {
+  text-decoration: none;
+}
+
+/* selected link */
+a:active {
+  text-decoration: none;
+}
