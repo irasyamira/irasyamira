@@ -1,12 +1,20 @@
 :root {
-  --blue: #1e90ff;
-  --white: #ffffff;
-  --colour0: #053742;
-  --colour1: #39A2DB;
-  --colour2: #E8F0F2;
-  --colour3: rgba(0, 0, 0,0.15);
-  --colour3: #CDF0EA;
-  --colour4: #A2DBFA;
+    --blue: #1e90ff;
+    --white: #ffffff;
+    /*bg color - even*/
+    --colour0: #FAF1E6;
+    /*body text - largest contrast to bg color*/
+    --colour1: #064420;
+    /*separators - some contrast to bg color*/
+    --colour2: #94D0CC;
+    /*heading/accent/active - even*/
+    --colour3: #FDFAF6;
+    /*accent (guestbook info) - even*/
+    --colour4: #4A503D;
+    /*shadow - greyish*/
+    --colour5: rgba(0, 0, 0,0.15);
+    --colour5: #666666;
+    --fontDefSize: 0.82em;
 }
 
 /*
@@ -21,7 +29,7 @@ body {
     background-color: var(--colour0);
     font-family: Bai Jamjuree;
     margin: 0;
-    color: var(--colour3);
+    color: var(--colour1);
 
     min-height: 100vh;
     display: flex;
@@ -33,7 +41,7 @@ body {
 	margin: 0;
 }
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 960px) {
     .container {
         padding: 0;
     	margin: 0;
@@ -41,24 +49,25 @@ body {
 }
 
 hr {
-    border: 1px solid var(--colour3);
+    border: 1px solid var(--colour2);
 }
 
 img {
     border-radius: 1em;
+    filter: drop-shadow(2px 2px 2px var(--colour5)) contrast(0.7) saturate(1);
 }
 
 p {
-    color: var(--colour3);
+    color: var(--colour1);
     word-wrap: break-word;
 }
 
 a {
-    color: var(--colour3);
+    color: var(--colour1);
     word-wrap: break-word;
 }
 
-/* Create two equal columns that floats next to each other */
+/* by default column panels are dual column of equal length */
 .column {
     width: 50%;
     float: left;
@@ -75,13 +84,16 @@ a {
     background-color: transparent;
     overflow: auto;
     height: 50vh;
-    padding: 0;
 }
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 960px) {
+    /* column panel expands to full width when screen is smaller */
     .column {
         width: 100%;
+    }
+    .scrollable {
+        height: 20vh;
     }
 }
 
@@ -89,56 +101,46 @@ a {
 /* HEADER */
 /*================================================================*/
 
-.header {
-    border: 1px;
+.header .column {
+    text-align: center;
 }
 
-ul.sidenav {
-    list-style-type: none;
-    margin: 0;
+.topnav {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-around;
 }
 
-ul.sidenav li a {
+.topnav .column a {
     display: block;
-    color: var(--colour3);
-    padding: 8px 16px;
+    color: var(--colour1);
+    padding: 1px 1px;
     text-decoration: none;
     font-size: 1.5em;
 }
 
-ul.sidenav li a.active {
+.topnav .column a.active {
     background-color: var(--colour3);
-    color: white;
+    color: var(--colour1);
 }
 
-ul.sidenav li a:hover:not(.active) {
-    background-color: var(--colour1);
-    color: white;
+.topnav .column a:hover:not(.active) {
+    background-color: var(--colour3);
+    color: var(--colour1);
 }
 
 div#header hr {
     border: 2px solid var(--colour2);
 }
 
-div#header img {
-    height: 3em;
-    padding: 0 1em;
-}
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 960px) {
     div#header hr {
         border: 1px solid var(--colour2);
     }
-
-    ul.sidenav {
-        list-style-type: none;
-        margin: 0;
-        display: flex;
-        justify-content: space-evenly;
+    .topnav .column a {
+        padding: 1px 2px;
+        font-size: 1em;
     }
-
 }
 
 /*================================================================*/
@@ -150,7 +152,7 @@ div#header img {
 }
 
 div#landing hr  {
-    border: 0.5px dashed var(--colour3);
+    border: 0.5px dashed var(--colour2);
 }
 
 div#landing .column {
@@ -166,18 +168,13 @@ div#landing img {
     padding: 1%;
 }
 
-div#landing .panelHeader {
-    display: flex;
-    justify-content: space-between;
-}
-
 /* mouse over link */
 div#landing a:hover {
     text-decoration: underline;
 }
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 960px) {
     .landing {
         padding: 0 1%;
     }
@@ -187,37 +184,33 @@ div#landing a:hover {
     }
 }
 
-.mySlides {
-    display:none
-
-}
-.w3-left, .w3-right, .w3-badge {
-    cursor:pointer
-}
-.w3-badge {
-    height:13px;
-    width:13px;
-    padding:0
-}
-
 /*================================================================*/
-/* ENTRY */
+/* GUESTBOOK */
 /*================================================================*/
 
 .newEntry {
-    padding: 4% 4%;
+    padding: 1.5% 4%;
 }
 
 div#newEntry .column {
     padding: 0 2%;
 }
 
-/*================================================================*/
-/* GUESTBOOK */
-/*================================================================*/
+div#newEntry .row {
+    padding: 1.5% 0;
+}
+
+div#newEntry hr {
+    border: 0.8px solid var(--colour2);
+}
+
 .entry {
     padding: 0.5em 2em;
-    border: 1px solid var(--colour1);
+    border: 1px solid var(--colour2);
+}
+
+.reviewEntry {
+    padding: 10% 30%;
 }
 
 .guestbook {
@@ -228,7 +221,7 @@ div#newEntry .column {
 
 .guestbook-info {
     padding: 0.5px 0em;
-    color: darkblue;
+    color: var(--colour4);
 }
 
 .guestbook-message {
@@ -240,6 +233,8 @@ div#newEntry .column {
 }
 
 .messageBox {
+    width: 100%;
+    height: 10vh;
 }
 
 .card {
@@ -253,15 +248,15 @@ div#newEntry .column {
     width: 25%;
 }
 
-.cardHover {
-    padding: 2% 2%;
-    width: 80%;
-}
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 960px) {
+    .reviewEntry {
+        padding: 0% 1%;
+    }
+    div#newEntry hr {
+        border: 0.8px dashed var(--colour2);
+    }
 
-
-div#panel marquee {
-    direction: left;
-    scrollmount: 5;
 }
 
 /*================================================================*/
@@ -272,7 +267,7 @@ div#panel marquee {
 }
 
 div#about hr {
-    border: 0.3px dotted var(--colour3);
+    border: 0.3px dashed var(--colour2);
 }
 
 /* Create two equal columns that floats next to each other */
@@ -303,7 +298,6 @@ div#about .row:after {
 
 .aboutDescription {
     text-align: justify;
-    border: 0px solid var(--colour3);
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -317,21 +311,123 @@ div#about img {
     width: 100%;
 }
 
-div#about img:hover {
+div#about .aboutLogo:hover {
     opacity: 0.5;
 }
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 960px) {
     div#about .column {
         width: 100%;
     }
     .about {
-        padding: 0 1%;
+        padding: 0 0.5%;
     }
     div#about img {
-        padding: 1% 20%;
+        padding: 1% 30%;
     }
+}
+
+/*================================================================*/
+/* CV */
+/*================================================================*/
+
+.cv {
+    padding: 1.5% 2%;
+}
+
+/*================================================================*/
+/* POSTS */
+/*================================================================*/
+.posts {
+    padding: 1.5% 2%;
+}
+
+.posts .row {
+    padding: 1% 1%;
+    text-align: justify;
+}
+
+.posts div#row hr {
+    border: 0.4px dashed var(--colour2);
+}
+
+.posts div#details {
+    color: var(--colour5);
+}
+
+div#posts .collapsible {
+    padding: 0.2% 5%;
+}
+
+/* Create two equal columns that floats next to each other */
+div#posts .column {
+    float: left;
+    padding: 10px;
+}
+
+div#posts .sidenav {
+    width: 25%;
+}
+
+div#posts .main {
+    width: 75%;
+}
+
+div#posts .left {
+    width: 30%;
+}
+
+div#posts .right {
+    width: 70%;
+}
+
+/* Clear floats after the columns */
+div#posts .row {
+    padding: 1.5% 5%;
+}
+
+/* Clear floats after the columns */
+div#posts .row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+div#posts img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1% 2%;
+    width: 100%;
+}
+
+.mySlides {
+    display:none;
+}
+
+div.desc {
+  padding: 15px;
+  text-align: center;
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+    div#posts .sidenav {
+        width: 100%;
+    }
+
+    div#posts .main {
+        width: 100%;
+    }
+    div#posts .left {
+        width: 100%;
+    }
+
+    div#posts .right {
+        width: 100%;
+    }
+
 }
 
 /*================================================================*/
@@ -339,10 +435,12 @@ div#about img:hover {
 /*================================================================*/
 
 .footer {
-
-
     margin-top: auto;
+    text-align: center;
+}
 
+div#footer .container {
+    padding: 0 20%;
 }
 
 /*================================================================*/
@@ -351,7 +449,7 @@ div#about img:hover {
 
 /* unvisited link */
 a:link {
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 /* visited link */
@@ -361,7 +459,7 @@ a:visited {
 
 /* mouse over link */
 a:hover {
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 /* selected link */

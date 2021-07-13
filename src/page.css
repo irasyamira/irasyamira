@@ -341,7 +341,7 @@ div#about .aboutLogo:hover {
         padding: 0 0.5%;
     }
     div#about img {
-        padding: 1% 20%;
+        padding: 1% 30%;
     }
 }
 
@@ -358,12 +358,110 @@ div#about .aboutLogo:hover {
 /* POSTS */
 /*================================================================*/
 .posts {
-    padding: 1.5% 10%;
+    padding: 1.5% 2%;
 }
 
 .posts .row {
-    border: 1px dashed var(--colour2);
-    padding: 1% 0;
+    padding: 1% 1%;
+    text-align: justify;
+}
+
+.posts div#row hr {
+    border: 0.4px dashed var(--colour2);
+}
+
+.posts div#details {
+    color: var(--colour5);
+}
+
+div#posts .collapsible {
+    padding: 0.2% 5%;
+}
+
+/* Create two equal columns that floats next to each other */
+div#posts .column {
+    float: left;
+    padding: 10px;
+}
+
+div#posts .sidenav {
+    width: 25%;
+}
+
+div#posts .main {
+    width: 75%;
+}
+
+div#posts .left {
+    width: 30%;
+}
+
+div#posts .right {
+    width: 70%;
+}
+
+/* Clear floats after the columns */
+div#posts .row {
+    padding: 1.5% 5%;
+}
+
+/* Clear floats after the columns */
+div#posts .row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+div#posts img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1% 2%;
+    width: 100%;
+}
+
+div.gallery {
+    margin: 5px;
+    border: 0px solid #ccc;
+    float: left;
+    width: 30%;
+    padding: 5% 1%;
+}
+
+div.gallery:hover {
+  border: 1px solid #777;
+}
+
+div.gallery img {
+  display: block;
+  max-width: 100%;
+  max-height: 30vh;
+  width: auto;
+  height: auto;
+}
+
+div.desc {
+  padding: 15px;
+  text-align: center;
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+    div#posts .sidenav {
+        width: 100%;
+    }
+
+    div#posts .main {
+        width: 100%;
+    }
+    div#posts .left {
+        width: 100%;
+    }
+
+    div#posts .right {
+        width: 100%;
+    }
+
 }
 
 /*================================================================*/
