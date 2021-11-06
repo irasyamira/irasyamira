@@ -4,6 +4,7 @@ import time
 from flask import Flask, request, redirect
 from datetime import datetime
 
+import os
 
 
 app = Flask(__name__)
@@ -16,7 +17,7 @@ headerObject1={'tag':'about','link':'/about'}
 headerObject2={'tag':'cv','link':'/cv'}
 headerObject3={'tag':'guestbook','link':'/guestbook'}
 headerObject4={'tag':'posts','link':'/posts'}
-arrayHeaderObject=[headerObject0,headerObject3,headerObject1,headerObject4,headerObject2]
+arrayHeaderObject=[headerObject0,headerObject1,headerObject4,headerObject3,headerObject2]
 
 guestCategory0={'tag':0,'label':'family','symbol':'👪'}
 guestCategory1={'tag':1,'label':'primary school','symbol':'🎒'}
@@ -60,7 +61,8 @@ arrayRenderType=[inputTypeTag0,inputTypeTag1,inputTypeTag2,inputTypeTag3,inputTy
 @app.route('/', methods=['GET','POST'])
 @app.route('/<page>', methods=['GET','POST'])
 @app.route('/<page>/', methods=['GET','POST'])
-def hello_world(page=None):
+@app.route('/<page>/<subpage>', methods=['GET','POST'])
+def hello_world(page=None,subpage=None):
     header=renderHeader(page)
     if (page==None):
         contentObj=landing()
@@ -71,9 +73,10 @@ def hello_world(page=None):
     elif (page=='guestbook'):
         contentObj=guestbook()
     elif (page=='posts'):
-        contentObj=posts()
-    elif (page=='signGuestbook'):
-        contentObj=newEntry()
+        if (subpage!=None):
+            contentObj=posts(subpage)
+        else:
+            contentObj=posts()
     elif (page=='reviewEntry'):
         contentObj=reviewEntry()
     elif (page=='editDatabase'):
@@ -235,17 +238,79 @@ def initDatabase():
     db1=guestbookDb.cursor()
     return {'cursor':db1,'database':guestbookDb}
 
-def posts():
+def posts(subpage=None):
     folder='posts'
     errorCode=True
-    errorMessage=None
+    errorMessage=''
     pageName='Posts'
+    ttt=content=sidenav=slide=''
 
+    tt=[{'title':'Making of this website','content':'intel','dateAdded':'20210706','link':7},
+	{'title':'My experience in Intel PSG','content':'intel','dateAdded':'20210705','link':0},
+    {'title':'My experience in Awantec','content':'awantec','dateAdded':'20210705','link':3},
+    {'title':'My experience in University of Auckland','content':'uoa','dateAdded':'20210705','link':1},
+    {'title':'My experience in Kolej Mara Banting','content':'kmb','dateAdded':'20210704','link':4},
+    {'title':'My experience in Universiti Malaya','content':'um','dateAdded':'20210703','link':6},
+    {'title':'My experience in Sekolah Seri Puteri','content':'ssp','dateAdded':'20210703','link':2},
+    {'title':'My experience in Sekolah Kebangsaan Putrajaya Presint 9 (1)','content':'skpj2','dateAdded':'20210703','link':5}]
     try:
-        content=renderHtml('posts',folder)
+        if (subpage!=None):
+            found=False
+            for t in tt:
+                link=t['link']
+                if (int(subpage)==link):
+                    path=os.getcwd()+'/src/posts/'+str(link)+'/img/'
+                    count=0
+                    f=ff=''
+                    for file in os.listdir(path):
+                        count+=1
+                        f+=renderHtml('img',folder).format(link=link,img=file) #,img1=img1,img2=img2)
+                        ff+=renderHtml('imgCount',folder).format(count=str(count)) #,img1=img1,img2=img2)
+
+                    slide=renderHtml('slide',folder).format(slides=f,count=ff)
+                    found=True
+                    pageName=title=t['title']
+
+                    path='/posts/{}'.format(str(link))
+                    entry=renderHtml('entry',path)
+
+                    dateAdded=t['dateAdded']
+                    ttt+=renderHtml('entry',folder).format(slide=slide,title=title,year=dateAdded[0:4],month=dateAdded[4:6],day=dateAdded[6:8],entry=entry)
+                    break
+            if (found==False):
+                ttt='post does not exist'
+        else:
+            for t in tt:
+                title=t['title']
+                link=t['link']
+                #content=os.getcwd()+'/src/posts/'+str(link)+'/entry'
+                path='/posts/{}'.format(str(link))
+                entry=renderHtml('entry',path)
+
+                path=os.getcwd()+'/src/posts/'+str(link)+'/img/'
+                count=0
+                for file in os.listdir(path):
+                    try:
+                        img='/src/posts/'+str(link)+'/img/{}'.format(file)
+                        break
+                    except Exception as e:
+                        errorMessage+=str(e)
+                        continue
+                preview=entry[0:80]
+                dateAdded=t['dateAdded']
+                ttt+=renderHtml('preview',folder).format(img=img,title=title,year=dateAdded[0:4],month=dateAdded[4:6],day=dateAdded[6:8],preview=preview,link=link)
+        #render sidenav
+        for t in tt:
+            title=t['title']
+            link=t['link']
+            sidenav+=renderHtml('sidenavObj',folder).format(title=title,link=link)
+
+
+        content=renderHtml('posts',folder).format(sidenav=sidenav,posts=ttt)
         errorCode=False
     except Exception as e:
-        errorMessage=str(e)
+        errorMessage+=str(e)
+        content+=errorMessage
 
     output=content
     return {'output':output,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
