@@ -9,15 +9,16 @@ import os
 
 app = Flask(__name__)
 
-srcPath='/home/arimaysari/irasyamira/src/'
-dbPath='/home/arimaysari/irasyamira/db/irasyamira-flask.db'
+srcPath='/home/arimaysari/irasyamira-flask/src/'
+dbPath='/home/arimaysari/irasyamira-flask/db/irasyamira-flask.db'
 
 headerObject0={'tag':'home','link':'/'}
 headerObject1={'tag':'about','link':'/about'}
 headerObject2={'tag':'cv','link':'/cv'}
 headerObject3={'tag':'guestbook','link':'/guestbook'}
 headerObject4={'tag':'posts','link':'/posts'}
-arrayHeaderObject=[headerObject0,headerObject1,headerObject4,headerObject3,headerObject2]
+headerObject5={'tag':'projects','link':'/projects'}
+arrayHeaderObject=[headerObject0,headerObject1,headerObject5]
 
 guestCategory0={'tag':0,'label':'family','symbol':'👪'}
 guestCategory1={'tag':1,'label':'primary school','symbol':'🎒'}
@@ -72,6 +73,8 @@ def hello_world(page=None,subpage=None):
         contentObj=about()
     elif (page=='guestbook'):
         contentObj=guestbook()
+    elif (page=='projects'):
+        contentObj=projects()
     elif (page=='posts'):
         if (subpage!=None):
             contentObj=posts(subpage)
@@ -104,6 +107,20 @@ def landing():
         panel3=contact()
         #panel2='Hello from Flask!'
         content=renderHtml('landing',folder).format(panel1=panel1,panel2=panel2,panel3=panel3)
+    except Exception as e:
+        #errorMessage=str(e)
+        content='fail -'+str(e)
+    output=content
+    return {'output':output,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+
+def projects():
+    folder='projects'
+    errorCode=True
+    errorMessage=None
+    pageName='Projects'
+    content=''
+    try:
+        content=renderHtml('projects',folder)
     except Exception as e:
         #errorMessage=str(e)
         content='fail -'+str(e)

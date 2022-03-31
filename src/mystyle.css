@@ -3,17 +3,29 @@
     --white: #ffffff;
     /*bg color - even*/
     --colour0: #FAF1E6;
+    --colour0: #2C3333;
     /*body text - largest contrast to bg color*/
     --colour1: #064420;
+    --colour1: #F5F2E7;
     /*separators - some contrast to bg color*/
     --colour2: #94D0CC;
+    --colour2: #2666CF;
     /*heading/accent/active - even*/
     --colour3: #FDFAF6;
+    --colour3: #395B64;
     /*accent (guestbook info) - even*/
     --colour4: #4A503D;
     /*shadow - greyish*/
     --colour5: rgba(0, 0, 0,0.15);
     --colour5: #666666;
+    /*headings*/
+    --colourh1: #2666CF;
+    --colourh2: #2666CF;
+    --colourh3: #54BAB9;
+    --colourh4: #2666CF;
+    --colourh5: #54BAB9;
+    --colourh6: #54BAB9;
+    --colourh7: #666666;
     --fontDefSize: 0.82em;
 }
 
@@ -65,6 +77,34 @@ p {
 a {
     color: var(--colour1);
     word-wrap: break-word;
+}
+
+h1 {
+  color: var(--colourh1);
+}
+
+h2 {
+  color: var(--colourh2);
+}
+
+h3 {
+  color: var(--colourh3);
+}
+
+h4 {
+  color: var(--colourh4);
+}
+
+h5 {
+  color: var(--colourh5);
+}
+
+h6 {
+  color: var(--colourh6);
+}
+
+h7 {
+  color: var(--colourh7);
 }
 
 /* by default column panels are dual column of equal length */

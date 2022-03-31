@@ -2,18 +2,22 @@
     --blue: #1e90ff;
     --white: #ffffff;
     /*bg color - even*/
-    --colour0: #FAF1E6;
+    --colour0: #393E46;
     /*body text - largest contrast to bg color*/
-    --colour1: #064420;
+    --colour1: #C8C2BC;
     /*separators - some contrast to bg color*/
-    --colour2: #94D0CC;
-    /*heading/accent/active - even*/
-    --colour3: #FDFAF6;
+    --colour2: #F4A9A8;
+    /*heading/accent/active - even - some contrast to body text (colour1)*/
+    --colour3: #CE97B0;
+    --colour3: rgba(0, 0, 0,0.15);
     /*accent (guestbook info) - even*/
-    --colour4: #4A503D;
+    --colour4: #D9CAB3;
     /*shadow - greyish*/
     --colour5: rgba(0, 0, 0,0.15);
     --colour5: #666666;
+    /*headings*/
+    --colourh1: #FBC6A4;
+    --colourh2: #AFB9C8;
     --fontDefSize: 0.82em;
 }
 
@@ -22,12 +26,12 @@ https://css-tricks.com/almanac/properties/j/justify-content/#:~:text=flex%2Dend%
 */
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: 'Raleway';
 }
 
 body {
     background-color: var(--colour0);
-    font-family: Bai Jamjuree;
     margin: 0;
     color: var(--colour1);
 
@@ -66,6 +70,42 @@ a {
     color: var(--colour1);
     word-wrap: break-word;
 }
+
+h1 {
+    color: var(--colourh1);
+    font-family: 'Raleway';
+}
+
+h2 {
+    color: var(--colourh2);
+    font-family: 'Raleway';
+}
+
+h3 {
+    color: var(--colourh1);
+    font-family: 'Raleway';
+}
+
+h4 {
+    color: var(--colourh2);
+    font-family: 'Raleway';
+}
+
+h5 {
+    color: var(--colourh1);
+    font-family: 'Raleway';
+}
+
+h6 {
+    color: var(--colourh2);
+    font-family: 'Raleway';
+}
+
+h7 {
+    color: var(--colourh1);
+    font-family: 'Raleway';
+}
+
 
 /* Create two equal columns that floats next to each other */
 .column {
