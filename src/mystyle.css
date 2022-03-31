@@ -2,30 +2,22 @@
     --blue: #1e90ff;
     --white: #ffffff;
     /*bg color - even*/
-    --colour0: #FAF1E6;
-    --colour0: #2C3333;
+    --colour0: #393E46;
     /*body text - largest contrast to bg color*/
-    --colour1: #064420;
-    --colour1: #F5F2E7;
+    --colour1: #C8C2BC;
     /*separators - some contrast to bg color*/
-    --colour2: #94D0CC;
-    --colour2: #2666CF;
-    /*heading/accent/active - even*/
-    --colour3: #FDFAF6;
-    --colour3: #395B64;
+    --colour2: #F4A9A8;
+    /*heading/accent/active - even - some contrast to body text (colour1)*/
+    --colour3: #CE97B0;
+    --colour3: rgba(0, 0, 0,0.15);
     /*accent (guestbook info) - even*/
-    --colour4: #4A503D;
+    --colour4: #D9CAB3;
     /*shadow - greyish*/
     --colour5: rgba(0, 0, 0,0.15);
     --colour5: #666666;
     /*headings*/
-    --colourh1: #2666CF;
-    --colourh2: #2666CF;
-    --colourh3: #54BAB9;
-    --colourh4: #2666CF;
-    --colourh5: #54BAB9;
-    --colourh6: #54BAB9;
-    --colourh7: #666666;
+    --colourh1: #FBC6A4;
+    --colourh2: #AFB9C8;
     --fontDefSize: 0.82em;
 }
 
@@ -34,12 +26,12 @@ https://css-tricks.com/almanac/properties/j/justify-content/#:~:text=flex%2Dend%
 */
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: 'Raleway';
 }
 
 body {
     background-color: var(--colour0);
-    font-family: Bai Jamjuree;
     margin: 0;
     color: var(--colour1);
 
@@ -80,34 +72,42 @@ a {
 }
 
 h1 {
-  color: var(--colourh1);
+    color: var(--colourh1);
+    font-family: 'Raleway';
 }
 
 h2 {
-  color: var(--colourh2);
+    color: var(--colourh2);
+    font-family: 'Raleway';
 }
 
 h3 {
-  color: var(--colourh3);
+    color: var(--colourh1);
+    font-family: 'Raleway';
 }
 
 h4 {
-  color: var(--colourh4);
+    color: var(--colourh2);
+    font-family: 'Raleway';
 }
 
 h5 {
-  color: var(--colourh5);
+    color: var(--colourh1);
+    font-family: 'Raleway';
 }
 
 h6 {
-  color: var(--colourh6);
+    color: var(--colourh2);
+    font-family: 'Raleway';
 }
 
 h7 {
-  color: var(--colourh7);
+    color: var(--colourh1);
+    font-family: 'Raleway';
 }
 
-/* by default column panels are dual column of equal length */
+
+/* Create two equal columns that floats next to each other */
 .column {
     width: 50%;
     float: left;
@@ -128,7 +128,6 @@ h7 {
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 960px) {
-    /* column panel expands to full width when screen is smaller */
     .column {
         width: 100%;
     }
@@ -188,7 +187,7 @@ div#header hr {
 /*================================================================*/
 
 .landing {
-    padding: 0 20%;
+    padding: 0 0%;
 }
 
 div#landing hr  {
@@ -208,6 +207,11 @@ div#landing img {
     padding: 1%;
 }
 
+div#landing .panelHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
 /* mouse over link */
 div#landing a:hover {
     text-decoration: underline;
@@ -222,6 +226,19 @@ div#landing a:hover {
     div#landing .row {
         padding: 1.5% 1%;
     }
+}
+
+.mySlides {
+    display:none
+
+}
+.w3-left, .w3-right, .w3-badge {
+    cursor:pointer
+}
+.w3-badge {
+    height:13px;
+    width:13px;
+    padding:0
 }
 
 /*================================================================*/
@@ -361,10 +378,20 @@ div#about .aboutLogo:hover {
         width: 100%;
     }
     .about {
-        padding: 0 0.5%;
+        padding: 0 1%;
     }
     div#about img {
         padding: 1% 30%;
+    }
+}
+
+/*================================================================*/
+/* PROJECTS */
+/*================================================================*/
+
+@media screen and (max-width: 960px) {
+    .projects {
+        padding: 0 1%;
     }
 }
 
@@ -375,6 +402,7 @@ div#about .aboutLogo:hover {
 .cv {
     padding: 1.5% 2%;
 }
+
 
 /*================================================================*/
 /* POSTS */
@@ -442,8 +470,24 @@ div#posts img {
     width: 100%;
 }
 
-.mySlides {
-    display:none;
+div.gallery {
+    margin: 5px;
+    border: 0px solid #ccc;
+    float: left;
+    width: 30%;
+    padding: 5% 1%;
+}
+
+div.gallery:hover {
+  border: 1px solid #777;
+}
+
+div.gallery img {
+  display: block;
+  max-width: 100%;
+  max-height: 30vh;
+  width: auto;
+  height: auto;
 }
 
 div.desc {

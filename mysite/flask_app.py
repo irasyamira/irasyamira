@@ -67,8 +67,6 @@ def hello_world(page=None,subpage=None):
     header=renderHeader(page)
     if (page==None):
         contentObj=landing()
-    elif (page=='cv'):
-        contentObj=cv()
     elif (page=='about'):
         contentObj=about()
     elif (page=='guestbook'):
@@ -104,9 +102,9 @@ def landing():
     try:
         panel1=renderHtml('welcomeMessage',folder)
         panel2=guestbook()
-        panel3=contact()
+        panel3=''
         #panel2='Hello from Flask!'
-        content=renderHtml('landing',folder).format(panel1=panel1,panel2=panel2,panel3=panel3)
+        content=renderHtml('landing',folder).format(panel1=panel1,panel2=panel2['output'],panel3=panel3)
     except Exception as e:
         #errorMessage=str(e)
         content='fail -'+str(e)
@@ -345,33 +343,6 @@ def about():
     except Exception as e:
         errorMessage=str(e)
 
-    output=content
-    return {'output':output,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
-
-def contact():
-    folder='contact'
-    errorCode=True
-    errorMessage=None
-    pageName='Contact'
-
-    try:
-        content=renderHtml('contact',folder)
-    except Exception as e:
-        errorMessage=str(e)
-
-    output=content
-    #return {'output':output,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
-    return output
-
-def cv():
-    folder='cv'
-    errorCode=True
-    errorMessage=None
-    pageName='CV'
-    try:
-        content=renderHtml('cv',folder)
-    except Exception as e:
-        errorMessage=str(e)
     output=content
     return {'output':output,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 

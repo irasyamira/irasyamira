@@ -8,7 +8,6 @@
     /*separators - some contrast to bg color*/
     --colour2: #F4A9A8;
     /*heading/accent/active - even - some contrast to body text (colour1)*/
-    --colour3: #CE97B0;
     --colour3: rgba(0, 0, 0,0.15);
     /*accent (guestbook info) - even*/
     --colour4: #D9CAB3;
@@ -45,10 +44,15 @@ body {
 	margin: 0;
 }
 
+
+
 @media screen and (max-width: 960px) {
     .container {
         padding: 0;
     	margin: 0;
+    }
+    .main {
+        padding: 0 2%;
     }
 }
 
@@ -83,7 +87,7 @@ h2 {
 
 h3 {
     color: var(--colourh1);
-    font-family: 'Raleway';
+    font-family: 'Raleway'
 }
 
 h4 {
@@ -187,44 +191,13 @@ div#header hr {
 /*================================================================*/
 
 .landing {
-    padding: 0 20%;
-}
-
-div#landing hr  {
-    border: 0.5px dashed var(--colour2);
-}
-
-div#landing .column {
-    border: 0 solid black;
-}
-
-div#landing .row {
-    padding: 1.5% 0;
-}
-
-div#landing img {
-    width: 100%;
-    padding: 1%;
-}
-
-div#landing .panelHeader {
-    display: flex;
-    justify-content: space-between;
-}
-
-/* mouse over link */
-div#landing a:hover {
-    text-decoration: underline;
+    padding: 0 0%;
 }
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 960px) {
     .landing {
-        padding: 0 1%;
-    }
-
-    div#landing .row {
-        padding: 1.5% 1%;
+        padding: 0 ;
     }
 }
 
@@ -308,7 +281,7 @@ div#newEntry hr {
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 960px) {
     .reviewEntry {
-        padding: 0% 1%;
+        padding: 0;
     }
     div#newEntry hr {
         border: 0.8px dashed var(--colour2);
@@ -320,68 +293,23 @@ div#newEntry hr {
 /* ABOUT */
 /*================================================================*/
 .about {
-    padding: 1.5% 3%;
-}
-
-div#about hr {
-    border: 0.3px dashed var(--colour2);
-}
-
-/* Create two equal columns that floats next to each other */
-div#about .column {
-    float: left;
-    padding: 10px;
-}
-
-div#about .left {
-    width: 35%;
-}
-
-div#about .right {
-    width: 65%;
-}
-
-/* Clear floats after the columns */
-div#about .row {
-    padding: 1.5% 5%;
-}
-
-/* Clear floats after the columns */
-div#about .row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.aboutDescription {
-    text-align: justify;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-div#about img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 1% 2%;
-    width: 100%;
-}
-
-div#about .aboutLogo:hover {
-    opacity: 0.5;
+    padding: 0;
 }
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 960px) {
-    div#about .column {
-        width: 100%;
-    }
     .about {
-        padding: 0 0.5%;
+        padding: 0;
     }
-    div#about img {
-        padding: 1% 30%;
+}
+
+/*================================================================*/
+/* PROJECTS */
+/*================================================================*/
+
+@media screen and (max-width: 960px) {
+    .projects {
+        padding: 0;
     }
 }
 
