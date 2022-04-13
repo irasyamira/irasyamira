@@ -5,7 +5,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!link href='https://fonts.googleapis.com/css?family=Bai Jamjuree' rel='stylesheet'>
 <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet'>
 <link rel="icon" type="image/png" href="/src/thumb5.png" >
 
@@ -29,26 +28,37 @@
 <meta property="twitter:image" content="/src/thumb5.png">
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="/src/page.css">
+<link rel="stylesheet" href="/src/page2.css">
+
 <title>{pageName}</title>
+
 </head>
+
 <body>
 
-<div class="container" id="container">
-    {header}
-    <div class="main" id="main">{body}</div>
+<header>
+  <div class="wrap">
+    <!-- nav class is added here -->
+    <div class="content nav">{header}</div>
+  </div>
+</header>
+
+<div class="main">
+  <div class="wrap">
+    <!-- content and sidebar are swapped. They can be made to show in the order above with CSS -->
+    <div class="content">{panel0}</div>
+    <div class="sidebar">{panel1}</div>
+  </div>
 </div>
 
-
-<div class="footer" id="footer">
-	<div class="container">
-        <small>@Copyright Ira Syamira 2021 - All Rights Reserved. | <a href="https://my.linkedin.com/in/ira-syamira-sukimin-741424143" target="_blank">LinkedIn</a>  | <a href="https://github.com/irasyamira" target="_blank">Github</a> | <a href="https://www.youtube.com/channel/UC_W8rFMtKCHI89cwUcq_T8Q" target="_blank">Youtube</a></small>
-    </div>
-</div>
-
+<footer>
+  <div class="wrap">
+    <div class="sidebar"></div>
+    <div class="content">{footer}</div>
+  </div>
+</footer>
 
 <script src="/src/page.js"></script>
-
 
 </body>
 </html>

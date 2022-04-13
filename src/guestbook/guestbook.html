@@ -1,2 +1,41 @@
-{alert}<div class="newEntry" id="newEntry"><div class="scrollable">{allEntries}</div><form name="input" action="/reviewEntry" method="post"><div class="formInput"><label for="name">Name</label><input type="text" id="name" name="name" value=""required></div><div class="formInput"><label for="message">Message (please keep language and message respectful, thank you!)</label><textarea class="messageBox" id="message" name="message" value=""required></textarea></div><div class="formInput">Where/How did we meet?<input type="radio" id="family" name="category" value="0" required><label for="family">Family</label><input type="radio" id="primary school" name="category" value="1"><label for="primary school">Primary school</label><input type="radio" id="secondary school" name="category" value="2"><label for="secondary school">Secondary school</label><input type="radio" id="college" name="category" value="3"><label for="college">College</label><input type="radio" id="university" name="category" value="4"><label for="university">University</label><input type="radio" id="workplace" name="category" value="5"><label for="workplace">Workplace</label><input type="radio" id="acquaintance" name="category" value="6"><label for="acquaintance">Acquaintance</label><input type="radio" id="socials" name="category" value="7"><label for="socials">Socials</label><input type="radio" id="others" name="category" value="8"><label for="others">Others</label><input type="radio" id="rather not say" name="category" value="9"><label for="rather not say">Rather not say</label></div><div class="formInput"><button class="submitButton" name="submit" type="submit" value="">Submit</button></div>
-</form>{newEntry}</div>
+{alert}
+<div id="guestbook">
+    <div class="row">
+        <h2>Guestbook</h2>
+        <div class="scrollable">
+            {allEntries}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <form name="input" action="/reviewEntry" method="post">
+        <div class="row">
+            <h4>Say Hi!</h4>
+            <div class="column">
+                <label for="name"><h7>Name:</h7></label>
+                <input type="text" id="name" name="name" value=""required>
+            </div>
+            <div class="column">
+                <label for="category"><h7>Where/How did we meet?</h7></label>
+                    <select name="category" id="category" required>
+                        <option value="" selected disabled hidden>Select here</option>
+                        <option value="0">Family</option>
+                        <option value="1">Primary school</option>
+                        <option value="2">Secondary school</option>
+                        <option value="3">College</option>
+                        <option value="4">University</option>
+                        <option value="5">Workplace</option>
+                        <option value="6">Acquaintance</option>
+                        <option value="7">Socials</option>
+                        <option value="8">Others</option>
+                        <option value="9">Rather not say</option>
+                    </select>
+            </div>
+        </div>
+        <div class="row">
+            <label for="message"><h7>Message</h7></label>
+            <textarea class="messageBox" id="message" name="message" placeholder="Please keep language and message respectful, thank you!" required></textarea>
+            <button class="submitButton" name="submit" type="submit" value="">Submit</button>
+        </div>
+    </form>
+</div>

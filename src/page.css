@@ -17,6 +17,7 @@
     /*headings*/
     --colourh1: #FBC6A4;
     --colourh2: #AFB9C8;
+    --colourh3: #F56D91;
     --fontDefSize: 0.82em;
 }
 
@@ -40,7 +41,7 @@ body {
 }
 
 .container {
-    padding: 2% 20%;
+    padding: 0;
 	margin: 0;
 }
 
@@ -52,7 +53,7 @@ body {
     	margin: 0;
     }
     .main {
-        padding: 0 2%;
+        padding: 0;
     }
 }
 
@@ -106,8 +107,9 @@ h6 {
 }
 
 h7 {
-    color: var(--colourh1);
+    color: var(--colourh3);
     font-family: 'Raleway';
+    display: block;
 }
 
 
@@ -127,24 +129,18 @@ h7 {
 .scrollable {
     background-color: transparent;
     overflow: auto;
-    height: 50vh;
 }
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 960px) {
-    .column {
-        width: 100%;
-    }
-    .scrollable {
-        height: 20vh;
-    }
+
 }
 
 /*================================================================*/
 /* HEADER */
 /*================================================================*/
 
-.header .column {
+div#header .column {
     text-align: center;
 }
 
@@ -177,13 +173,6 @@ div#header hr {
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 960px) {
-    div#header hr {
-        border: 1px solid var(--colour2);
-    }
-    .topnav .column a {
-        padding: 1px 2px;
-        font-size: 1em;
-    }
 }
 
 /*================================================================*/
@@ -191,13 +180,30 @@ div#header hr {
 /*================================================================*/
 
 .landing {
-    padding: 0 0%;
+    padding: 0;
+}
+
+div#landing .left {
+    width: 60%;
+    padding: 0 3%;
+}
+
+div#landing .right {
+    width: 40%;
+    padding: 0 3%;
 }
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 960px) {
     .landing {
         padding: 0 ;
+    }
+    div#landing .left {
+        width: 100%;
+    }
+
+    div#landing .right {
+        width: 100%;
     }
 }
 
@@ -218,25 +224,19 @@ div#header hr {
 /* GUESTBOOK */
 /*================================================================*/
 
-.newEntry {
-    padding: 1.5% 4%;
+div#guestbook .row {
+    padding-bottom: 2%;
 }
 
-div#newEntry .column {
-    padding: 0 2%;
+div#guestbook hr {
+    border: 0.5px dashed var(--colour3);
+    margin-right: 2%;
+    margin-top: 0.5%;
+    margin-bottom: 0.5%;
 }
 
-div#newEntry .row {
-    padding: 1.5% 0;
-}
-
-div#newEntry hr {
-    border: 0.8px solid var(--colour2);
-}
-
-.entry {
-    padding: 0.5em 2em;
-    border: 1px solid var(--colour2);
+div#guestbook .scrollable {
+    height: 30vh;
 }
 
 .reviewEntry {
@@ -249,43 +249,14 @@ div#newEntry hr {
     height: 100%;
 }
 
-.guestbook-info {
-    padding: 0.5px 0em;
-    color: var(--colour4);
-}
-
-.guestbook-message {
-    padding: 0.2px 0em;
-}
-
-.formInput {
-    padding: 0.3em 0em;
-}
-
 .messageBox {
     width: 100%;
-    height: 10vh;
+    height: 6vh;
 }
 
-.card {
-    opacity: 0.9;
-}
-
-.cardContainer {
-    padding: 1% 5%;;
-    background-color: var(--colour2);
-    word-wrap: break-word;
-    width: 25%;
-}
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 960px) {
-    .reviewEntry {
-        padding: 0;
-    }
-    div#newEntry hr {
-        border: 0.8px dashed var(--colour2);
-    }
+@media screen and (max-width: 960) {
 
 }
 
@@ -312,15 +283,6 @@ div#newEntry hr {
         padding: 0;
     }
 }
-
-/*================================================================*/
-/* CV */
-/*================================================================*/
-
-.cv {
-    padding: 1.5% 2%;
-}
-
 
 /*================================================================*/
 /* POSTS */
@@ -415,20 +377,6 @@ div.desc {
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
-    div#posts .sidenav {
-        width: 100%;
-    }
-
-    div#posts .main {
-        width: 100%;
-    }
-    div#posts .left {
-        width: 100%;
-    }
-
-    div#posts .right {
-        width: 100%;
-    }
 
 }
 
@@ -442,7 +390,7 @@ div.desc {
 }
 
 div#footer .container {
-    padding: 0 20%;
+    padding: 0;
 }
 
 /*================================================================*/

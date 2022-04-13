@@ -6,7 +6,6 @@ from datetime import datetime
 
 import os
 
-
 app = Flask(__name__)
 
 srcPath='/home/arimaysari/irasyamira-flask/src/'
@@ -65,6 +64,8 @@ arrayRenderType=[inputTypeTag0,inputTypeTag1,inputTypeTag2,inputTypeTag3,inputTy
 @app.route('/<page>/<subpage>', methods=['GET','POST'])
 def hello_world(page=None,subpage=None):
     header=renderHeader(page)
+    panel0=panel1=''
+
     if (page==None):
         contentObj=landing()
     elif (page=='about'):
@@ -81,49 +82,46 @@ def hello_world(page=None,subpage=None):
     elif (page=='reviewEntry'):
         contentObj=reviewEntry()
     elif (page=='editDatabase'):
-        contentObj=guestbook(editDatabase())
+        contentObj=landing(editDatabase())
     elif (page=='home'):
         return redirect("/")
     else:
         contentObj=landing()
 
-    content=contentObj['output']
+    panel0=contentObj['panel0']
+    panel1=contentObj['panel1']
     pageName=contentObj['pageName']
-    body=content
-    page=renderHtml('page').format(pageName=pageName,header=header,body=body)
+    footer=renderHtml('footer')
+    page=renderHtml('page').format(pageName=pageName,header=header,panel0=panel0,panel1=panel1,footer=footer)
     return page
 
-def landing():
+def landing(alert=None):
     folder='landing'
     errorCode=True
     errorMessage=None
     pageName='Home'
-    content=''
+    panel0=panel1=''
     try:
-        panel1=renderHtml('welcomeMessage',folder)
-        panel2=guestbook()
-        panel3=''
-        #panel2='Hello from Flask!'
-        content=renderHtml('landing',folder).format(panel1=panel1,panel2=panel2['output'],panel3=panel3)
+        panel0=renderHtml('welcomeMessage',folder)
+        temp=guestbook(alert)
+        panel1=temp['panel0']
     except Exception as e:
-        #errorMessage=str(e)
-        content='fail -'+str(e)
-    output=content
-    return {'output':output,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+        errorMessage=str(e)
+        panel0='fail -'+str(e)
+    return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 
 def projects():
     folder='projects'
     errorCode=True
     errorMessage=None
     pageName='Projects'
-    content=''
+    panel0=panel1=''
     try:
-        content=renderHtml('projects',folder)
+        panel0=renderHtml('projects',folder)
     except Exception as e:
         #errorMessage=str(e)
-        content='fail -'+str(e)
-    output=content
-    return {'output':output,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+        panel0='fail -'+str(e)
+    return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 
 '''
 guestbookTableKey6={'tag':6,'displayName':'message','render':1,'inputTypeTag':6}
@@ -136,24 +134,26 @@ def guestbook(alert=None):
     errorCode=True
     content=alertMessage=''
     pageName='Guestbook'
+    panel0=panel1=''
 
     allEntries=listEntries('guestbook',0)
 
     try:
-        newEntry=''
+        #newEntry=''
         if (alert!=None):
             if (alert):
                 alertMessage='<body onLoad="myFunction(false);">'
             else:
                 alertMessage='<body onLoad="myFunction(true);">'
         #content+='alert: ' + str(not alert)
-        content+=renderHtml('guestbook',folder).format(alert=alertMessage,allEntries=allEntries,newEntry=newEntry)
+        #content+=renderHtml('guestbook',folder).format(alert=alertMessage,allEntries=allEntries,newEntry=newEntry)
+        content+=renderHtml('guestbook',folder).format(alert=alertMessage,allEntries=allEntries)
         errorCode=False
     except Exception as e:
         errorMessage=str(e)
         content='fail -'+str(e)
-    output=content
-    return {'output':output,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+    panel0=content
+    return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 
 def listEntries(table='guestbook',sortBy=0,mode=None):
     folder='entries'
@@ -190,6 +190,7 @@ def reviewEntry():
     errorCode=True
     content=''
     pageName='Review Entry'
+    panel0=panel1=''
 
     try:
         sender=request.form['name']
@@ -205,7 +206,7 @@ def reviewEntry():
         errorMessage=str(e)
         content='fail -'+str(e)
     output=content
-    return {'output':output,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+    return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 
 def editDatabase(table='guestbook',newEntry=False):
     dbObj=initDatabase()
@@ -259,6 +260,7 @@ def posts(subpage=None):
     errorMessage=''
     pageName='Posts'
     ttt=content=sidenav=slide=''
+    panel0=panel1=''
 
     tt=[{'title':'Making of this website','content':'intel','dateAdded':'20210706','link':7},
 	{'title':'My experience in Intel PSG','content':'intel','dateAdded':'20210705','link':0},
@@ -328,7 +330,7 @@ def posts(subpage=None):
         content+=errorMessage
 
     output=content
-    return {'output':output,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+    return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 
 
 def about():
@@ -336,6 +338,7 @@ def about():
     errorCode=True
     errorMessage=None
     pageName='About'
+    panel0=panel1=''
 
     try:
         content=renderHtml('about',folder)
@@ -344,7 +347,7 @@ def about():
         errorMessage=str(e)
 
     output=content
-    return {'output':output,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+    return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 
 def renderHeader(page=None):
     folder='header'

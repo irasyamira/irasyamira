@@ -31,21 +31,18 @@ https://css-tricks.com/almanac/properties/j/justify-content/#:~:text=flex%2Dend%
 }
 
 body {
-    background-color: var(--colour0);
     margin: 0;
-    color: var(--colour1);
-
-    min-height: 100vh;
     display: flex;
+    min-height: 100vh;
+    color: var(--colour1);
     flex-direction: column;
+    background-color: var(--colour0);
 }
 
 .container {
     padding: 0;
 	margin: 0;
 }
-
-
 
 @media screen and (max-width: 960px) {
     .container {
@@ -112,9 +109,43 @@ h7 {
     display: block;
 }
 
+/*================================================================*/
+/* LINKS */
+/*================================================================*/
+
+/* unvisited link */
+a:link {
+  text-decoration: underline;
+}
+
+/* visited link */
+a:visited {
+  text-decoration: none;
+}
+
+/* mouse over link */
+a:hover {
+  text-decoration: underline;
+}
+
+/* selected link */
+a:active {
+  text-decoration: none;
+}
 
 /* Create two equal columns that floats next to each other */
 .column {
+    width: 50%;
+    float: left;
+}
+
+/* Create two equal columns that floats next to each other */
+.content {
+    width: 50%;
+    float: left;
+}
+
+.sidebar {
     width: 50%;
     float: left;
 }
@@ -133,12 +164,7 @@ h7 {
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 960px) {
-    .column {
-        width: 100%;
-    }
-    .scrollable {
-        height: 60vh;
-    }
+
 }
 
 /*================================================================*/
@@ -178,14 +204,6 @@ div#header hr {
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 960px) {
-    div#header hr {
-        border: 1px solid var(--colour2);
-        margin: 0;
-    }
-    .topnav .column a {
-        padding: 0;
-        font-size: 1.5em;
-    }
 }
 
 /*================================================================*/
@@ -270,12 +288,7 @@ div#guestbook .scrollable {
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 960) {
-    .reviewEntry {
-        padding: 0;
-    }
-    div#guestbook .row {
-        padding: 1% 0;
-    }
+
 }
 
 /*================================================================*/
@@ -301,15 +314,6 @@ div#guestbook .scrollable {
         padding: 0;
     }
 }
-
-/*================================================================*/
-/* CV */
-/*================================================================*/
-
-.cv {
-    padding: 1.5% 2%;
-}
-
 
 /*================================================================*/
 /* POSTS */
@@ -404,20 +408,6 @@ div.desc {
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
-    div#posts .sidenav {
-        width: 100%;
-    }
-
-    div#posts .main {
-        width: 100%;
-    }
-    div#posts .left {
-        width: 100%;
-    }
-
-    div#posts .right {
-        width: 100%;
-    }
 
 }
 
@@ -434,26 +424,3 @@ div#footer .container {
     padding: 0;
 }
 
-/*================================================================*/
-/* LINKS */
-/*================================================================*/
-
-/* unvisited link */
-a:link {
-  text-decoration: underline;
-}
-
-/* visited link */
-a:visited {
-  text-decoration: none;
-}
-
-/* mouse over link */
-a:hover {
-  text-decoration: underline;
-}
-
-/* selected link */
-a:active {
-  text-decoration: none;
-}
