@@ -63,7 +63,7 @@ arrayRenderType=[inputTypeTag0,inputTypeTag1,inputTypeTag2,inputTypeTag3,inputTy
 @app.route('/<page>/', methods=['GET','POST'])
 @app.route('/<page>/<subpage>', methods=['GET','POST'])
 def hello_world(page=None,subpage=None):
-    header=renderHeader(page)
+
     panel0=panel1=''
 
     if (page==None):
@@ -91,10 +91,40 @@ def hello_world(page=None,subpage=None):
     panel0=contentObj['panel0']
     panel1=contentObj['panel1']
     pageName=contentObj['pageName']
-    footer=renderHtml('footer')
-    page=renderHtml('page').format(pageName=pageName,header=header,panel0=panel0,panel1=panel1,footer=footer)
+    panelHeader=header(page)
+    panelFooter=footer()
+    page=renderHtml('page').format(pageName=pageName,header=panelHeader,panel0=panel0,panel1=panel1,footer=panelFooter)
     return page
 
+# function type: render object
+def footer():
+    folder='footer'
+    output=''
+    try:
+        output=renderHtml('footer',folder)
+    except Exception as e:
+        #errorMessage=str(e)
+        output='fail -'+str(e)
+    return output
+
+# function type: render object
+def header(page=None):
+    folder='header'
+    output=headerObjects=''
+    for obj in arrayHeaderObject:
+        objectName=obj['tag']
+        link=obj['link']
+        if (str(page)==str(None)):
+            page='home'
+        if (page==objectName):
+            headerObjects+=renderHtml('headerObjectActive',folder).format(link=link,pageName=objectName.upper())
+        else:
+            headerObjects+=renderHtml('headerObject',folder).format(link=link,pageName=objectName.upper())
+        #headerObjects+='current page: ' + str(page)
+    output=renderHtml('header',folder).format(headerObjects=headerObjects)
+    return output
+
+# function type: render page
 def landing(alert=None):
     folder='landing'
     errorCode=True
@@ -110,6 +140,7 @@ def landing(alert=None):
         panel0='fail -'+str(e)
     return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 
+# function type: render page
 def projects():
     folder='projects'
     errorCode=True
@@ -128,6 +159,7 @@ guestbookTableKey6={'tag':6,'displayName':'message','render':1,'inputTypeTag':6}
 arrayGuestbookTableKey
 '''
 
+# function type: render object
 def guestbook(alert=None):
     folder='guestbook'
     errorMessage=None
@@ -155,6 +187,7 @@ def guestbook(alert=None):
     panel0=content
     return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 
+# function type: operational
 def listEntries(table='guestbook',sortBy=0,mode=None):
     folder='entries'
     dbObj=initDatabase()
@@ -184,6 +217,7 @@ def listEntries(table='guestbook',sortBy=0,mode=None):
     output=content
     return output
 
+# function type: operational
 def reviewEntry():
     folder='entries'
     errorMessage=None
@@ -205,17 +239,18 @@ def reviewEntry():
     except Exception as e:
         errorMessage=str(e)
         content='fail -'+str(e)
-    output=content
+    panel0=content
     return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 
+# function type: operational
 def editDatabase(table='guestbook',newEntry=False):
     dbObj=initDatabase()
     db1=dbObj['cursor']
     guestbookDb=dbObj['database']
-    errorMessage=None
+    #errorMessage=None
     errorCode=True
     content=''
-    pageName='Update Guestbook'
+
     try:
         content+='sender'
         sender=request.form['sender']
@@ -236,24 +271,27 @@ def editDatabase(table='guestbook',newEntry=False):
             errorCode=False
             content='success!'
         except Exception as e:
-            errorMessage=str(e)
+            #errorMessage=str(e)
             content='fail to commit to db -'+str(e)
 
     except Exception as e:
-        errorMessage=str(e)
+        #errorMessage=str(e)
         content+='fail to retrieve params -'+str(e)
 
     return errorCode
 
+# function type: operational
 def getObjectFromTable(obj,table='guestbook'):
     [row_id,publishStatusTag,dateAdded,sender,category,others,message,epochTime]=obj
     return {'row_id':row_id,'sender':sender,'message':message,'dateAdded':dateAdded,'publishStatusTag':publishStatusTag,'category':category,'others':others,'epochTime':epochTime}
 
+# function type: operational
 def initDatabase():
     guestbookDb=sqlite3.connect(dbPath, check_same_thread=False)
     db1=guestbookDb.cursor()
     return {'cursor':db1,'database':guestbookDb}
 
+# function type: render page
 def posts(subpage=None):
     folder='posts'
     errorCode=True
@@ -329,10 +367,10 @@ def posts(subpage=None):
         errorMessage+=str(e)
         content+=errorMessage
 
-    output=content
+    panel0=content
     return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 
-
+# function type: render page
 def about():
     folder='about'
     errorCode=True
@@ -346,25 +384,10 @@ def about():
     except Exception as e:
         errorMessage=str(e)
 
-    output=content
+    panel0=content
     return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 
-def renderHeader(page=None):
-    folder='header'
-    output=headerObjects=''
-    for obj in arrayHeaderObject:
-        objectName=obj['tag']
-        link=obj['link']
-        if (str(page)==str(None)):
-            page='home'
-        if (page==objectName):
-            headerObjects+=renderHtml('headerObjectActive',folder).format(link=link,pageName=objectName.upper())
-        else:
-            headerObjects+=renderHtml('headerObject',folder).format(link=link,pageName=objectName.upper())
-        #headerObjects+='current page: ' + str(page)
-    output=renderHtml('header',folder).format(headerObjects=headerObjects)
-    return output
-
+# function type: operational
 def renderHtml(filename,path=None):
     if (path==None):
         fullFilename=srcPath+filename+'.html'
