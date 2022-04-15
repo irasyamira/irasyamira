@@ -148,11 +148,16 @@ def projects():
     pageName='Projects'
     panel0=panel1=''
     try:
-        panel0=renderHtml('projects',folder)
+        panel0=listEntries('projects',0)
+        panel1=renderHtml('projects',folder)
     except Exception as e:
         #errorMessage=str(e)
         panel0='fail -'+str(e)
     return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+
+# function type: render object
+def sidebarProjects():
+    return True
 
 '''
 guestbookTableKey6={'tag':6,'displayName':'message','render':1,'inputTypeTag':6}
@@ -188,28 +193,48 @@ def guestbook(alert=None):
     return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 
 # function type: operational
-def listEntries(table='guestbook',sortBy=0,mode=None):
+def getObjectFromTable(obj,table='guestbook'):
+    [row_id,publishStatusTag,dateAdded,sender,category,others,message,epochTime]=obj
+    return {'row_id':row_id,'sender':sender,'message':message,'dateAdded':dateAdded,'publishStatusTag':publishStatusTag,'category':category,'others':others,'epochTime':epochTime}
+
+dbTableObject0={'tag':0,'tableName':'guestbook','grouping':None,'sortBy':'epochTime'}
+dbTableObject1={'tag':1,'tableName':'projects','grouping':'category','sortBy':'epochTime'}
+dbTableObject2={'tag':2,'tableName':'about','grouping':'category','sortBy':'epochTime'}
+dbTableArray=[dbTableObject0,dbTableObject1,dbTableObject2]
+
+# function type: operational
+def listEntries(table,sortBy=0,mode=None):
     folder='entries'
     dbObj=initDatabase()
     db1=dbObj['cursor']
     content=''
     obj={}
 
-    db1.execute('SELECT * FROM {} ORDER BY epochTime DESC LIMIT 0, 49999;'.format(table))
+    #get dbTableObject based on tableName
+    for dbTableObject in dbTableArray:
+        if table==dbTableObject['tableName']:
+            tableName=dbTableObject['tableName']
+            grouping=dbTableObject['grouping']
+            sortBy=dbTableObject['sortBy']
+
+    db1.execute('SELECT * FROM {} ORDER BY {} DESC LIMIT 0, 49999;'.format(tableName,sortBy))
     ll=db1.fetchall()
 
     try:
         for l in ll:
-            obj=getObjectFromTable(l,table)
-            sender=obj['sender']
-            category=obj['category']
-            for guestCategory in arrayGuestCategory:
-                if category==guestCategory['tag']:
-                    symbol=guestCategory['symbol']
-            dateAdded=str(obj['dateAdded'])
-            displayDateAdded=renderHtml('displayDateAdded',folder).format(year=dateAdded[0:4],month=dateAdded[4:6],day=dateAdded[6:8])
-            message=obj['message']
-            content+=renderHtml('entry',folder).format(symbol=symbol,sender=sender,dateAdded=displayDateAdded,message=message)
+            if tableName=='guestbook':
+                obj=getObjectFromTable(l,tableName)
+                sender=obj['sender']
+                category=obj['category']
+                for guestCategory in arrayGuestCategory:
+                    if category==guestCategory['tag']:
+                        symbol=guestCategory['symbol']
+                dateAdded=str(obj['dateAdded'])
+                displayDateAdded=renderHtml('displayDateAdded',folder).format(year=dateAdded[0:4],month=dateAdded[4:6],day=dateAdded[6:8])
+                message=obj['message']
+                content+=renderHtml('entry',folder).format(symbol=symbol,sender=sender,dateAdded=displayDateAdded,message=message)
+            else:
+                content+=str(l)+'<br>'
     except Exception as e:
         errorMessage=e
         content=str(errorMessage)
@@ -279,11 +304,6 @@ def editDatabase(table='guestbook',newEntry=False):
         content+='fail to retrieve params -'+str(e)
 
     return errorCode
-
-# function type: operational
-def getObjectFromTable(obj,table='guestbook'):
-    [row_id,publishStatusTag,dateAdded,sender,category,others,message,epochTime]=obj
-    return {'row_id':row_id,'sender':sender,'message':message,'dateAdded':dateAdded,'publishStatusTag':publishStatusTag,'category':category,'others':others,'epochTime':epochTime}
 
 # function type: operational
 def initDatabase():
@@ -379,12 +399,12 @@ def about():
     panel0=panel1=''
 
     try:
-        content=renderHtml('about',folder)
+        panel0=listEntries('about',0)
+        panel1=renderHtml('about',folder)
         errorCode=False
     except Exception as e:
         errorMessage=str(e)
 
-    panel0=content
     return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 
 # function type: operational
