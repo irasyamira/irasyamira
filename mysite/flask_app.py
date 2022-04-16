@@ -192,19 +192,36 @@ def guestbook(alert=None):
     panel0=content
     return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 
-# function type: operational
-def getObjectFromTable(obj,table='guestbook'):
-    [row_id,publishStatusTag,dateAdded,sender,category,others,message,epochTime]=obj
-    return {'row_id':row_id,'sender':sender,'message':message,'dateAdded':dateAdded,'publishStatusTag':publishStatusTag,'category':category,'others':others,'epochTime':epochTime}
+# from dwellingsouls - announcement table details
+#tableObj0a=['row_id','publishStatusTag','epochTime','addedDate','lastEditedDate','content']
+#tableObj0b=[7,12,7,7,7,22]
+#tableObj0c=[None,[{'tag':0,'displayName':'Draft'},{'tag':1,'displayName':'Publish'}],int(time.time()),datetime.today().strftime('%Y%m%d'),datetime.today().strftime('%Y%m%d'),None]
+#tableObj0={'tag':0,'tablename':'announcements','columns':tableObj0a,'formInputType':tableObj0b,'valuesArray':tableObj0c}
 
-dbTableObject0={'tag':0,'tableName':'guestbook','grouping':None,'sortBy':'epochTime'}
-dbTableObject1={'tag':1,'tableName':'projects','grouping':'category','sortBy':'epochTime'}
-dbTableObject2={'tag':2,'tableName':'about','grouping':'category','sortBy':'epochTime'}
+dbTableObj0a=['row_id','publishStatusTag','dateAdded','sender','category','others','message','epochTime']
+dbTableObject0={'tag':0,'tableName':'guestbook','columns':dbTableObj0a,'grouping':None,'sortBy':'epochTime'}
+
+dbTableObj1a=['row_id','publishStatusTag','dateAdded','category','displayOrder','file','title','link','skills','media','epochTime']
+dbTableObject1={'tag':1,'tableName':'projects','columns':dbTableObj1a,'grouping':'category','sortBy':'epochTime'}
+
+dbTableObj2a=['row_id','publishStatusTag','dateAdded','category','displayOrder','file','title','duration','position','link','media','epochTime']
+dbTableObject2={'tag':2,'tableName':'about','columns':dbTableObj2a,'grouping':'category','sortBy':'epochTime'}
+
 dbTableArray=[dbTableObject0,dbTableObject1,dbTableObject2]
 
 # function type: operational
+def convertArrayToObject(obj,table):
+    for dbTableObject in dbTableArray:
+        if table==dbTableObject['tableName']:
+            arrayColumns=dbTableObject['columns']
+
+    #[row_id,publishStatusTag,dateAdded,sender,category,others,message,epochTime]=obj
+    #return {'row_id':row_id,'sender':sender,'message':message,'dateAdded':dateAdded,'publishStatusTag':publishStatusTag,'category':category,'others':others,'epochTime':epochTime}
+    return dict(zip(arrayColumns,obj))
+
+# function type: operational
 def listEntries(table,sortBy=0,mode=None):
-    folder='entries'
+    folder=table
     dbObj=initDatabase()
     db1=dbObj['cursor']
     content=''
@@ -223,7 +240,8 @@ def listEntries(table,sortBy=0,mode=None):
     try:
         for l in ll:
             if tableName=='guestbook':
-                obj=getObjectFromTable(l,tableName)
+                folder='entries'
+                obj=convertArrayToObject(l,tableName)
                 sender=obj['sender']
                 category=obj['category']
                 for guestCategory in arrayGuestCategory:
@@ -234,7 +252,8 @@ def listEntries(table,sortBy=0,mode=None):
                 message=obj['message']
                 content+=renderHtml('entry',folder).format(symbol=symbol,sender=sender,dateAdded=displayDateAdded,message=message)
             else:
-                content+=str(l)+'<br>'
+                obj=convertArrayToObject(l,tableName)
+                content+=renderHtml('sidebarObject',folder).format(obj['title'])
     except Exception as e:
         errorMessage=e
         content=str(errorMessage)
