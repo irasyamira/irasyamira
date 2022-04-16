@@ -31,21 +31,18 @@ https://css-tricks.com/almanac/properties/j/justify-content/#:~:text=flex%2Dend%
 }
 
 body {
-    background-color: var(--colour0);
     margin: 0;
-    color: var(--colour1);
-
-    min-height: 100vh;
     display: flex;
+    min-height: 100vh;
+    color: var(--colour1);
     flex-direction: column;
+    background-color: var(--colour0);
 }
 
 .container {
     padding: 0;
 	margin: 0;
 }
-
-
 
 @media screen and (max-width: 960px) {
     .container {
@@ -112,9 +109,42 @@ h7 {
     display: block;
 }
 
+/*================================================================*/
+/* LINKS */
+/*================================================================*/
+
+/* unvisited link */
+a:link {
+  text-decoration: none;
+}
+
+/* visited link */
+a:visited {
+  text-decoration: none;
+}
+
+/* mouse over link */
+a:hover {
+}
+
+/* selected link */
+a:active {
+  text-decoration: none;
+}
 
 /* Create two equal columns that floats next to each other */
 .column {
+    width: 50%;
+    float: left;
+}
+
+/* Create two equal columns that floats next to each other */
+.content {
+    width: 50%;
+    float: left;
+}
+
+.sidebar {
     width: 50%;
     float: left;
 }
@@ -183,14 +213,12 @@ div#header hr {
     padding: 0;
 }
 
-div#landing .left {
-    width: 60%;
-    padding: 0 3%;
+div#landing .sidebar {
+    width: 70%;
 }
 
-div#landing .right {
-    width: 40%;
-    padding: 0 3%;
+div#landing .content {
+    width: 30%;
 }
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
@@ -198,11 +226,11 @@ div#landing .right {
     .landing {
         padding: 0 ;
     }
-    div#landing .left {
+    div#landing .sidebar {
         width: 100%;
     }
 
-    div#landing .right {
+    div#landing .content {
         width: 100%;
     }
 }
@@ -267,6 +295,19 @@ div#guestbook .scrollable {
     padding: 0;
 }
 
+div#about .sidebar {
+    width: 40%;
+}
+
+div#about .content {
+    width: 60%;
+}
+
+div#about a:hover {
+    font-size:calc(var(--fontDefSize)*1.5);
+    font-size-adjust: 20px;
+}
+
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 960px) {
     .about {
@@ -277,6 +318,22 @@ div#guestbook .scrollable {
 /*================================================================*/
 /* PROJECTS */
 /*================================================================*/
+.projects {
+    padding: 0;
+}
+
+div#projects .sidebar {
+    width: 40%;
+}
+
+div#projects .content {
+    width: 60%;
+}
+
+div#projects a:hover {
+    font-size:calc(var(--fontDefSize)*1.5);
+    font-size-adjust: 20px;
+}
 
 @media screen and (max-width: 960px) {
     .projects {
@@ -393,26 +450,3 @@ div#footer .container {
     padding: 0;
 }
 
-/*================================================================*/
-/* LINKS */
-/*================================================================*/
-
-/* unvisited link */
-a:link {
-  text-decoration: underline;
-}
-
-/* visited link */
-a:visited {
-  text-decoration: none;
-}
-
-/* mouse over link */
-a:hover {
-  text-decoration: underline;
-}
-
-/* selected link */
-a:active {
-  text-decoration: none;
-}

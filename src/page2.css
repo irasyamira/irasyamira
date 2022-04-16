@@ -115,7 +115,7 @@ h7 {
 
 /* unvisited link */
 a:link {
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 /* visited link */
@@ -125,7 +125,6 @@ a:visited {
 
 /* mouse over link */
 a:hover {
-  text-decoration: underline;
 }
 
 /* selected link */
@@ -214,14 +213,12 @@ div#header hr {
     padding: 0;
 }
 
-div#landing .left {
-    width: 60%;
-    padding: 0 3%;
+div#landing .sidebar {
+    width: 70%;
 }
 
-div#landing .right {
-    width: 40%;
-    padding: 0 3%;
+div#landing .content {
+    width: 30%;
 }
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
@@ -229,11 +226,11 @@ div#landing .right {
     .landing {
         padding: 0 ;
     }
-    div#landing .left {
+    div#landing .sidebar {
         width: 100%;
     }
 
-    div#landing .right {
+    div#landing .content {
         width: 100%;
     }
 }
@@ -298,6 +295,19 @@ div#guestbook .scrollable {
     padding: 0;
 }
 
+div#about .sidebar {
+    width: 30%;
+}
+
+div#about .content {
+    width: 70%;
+}
+
+div#about a:hover {
+    font-size:calc(var(--fontDefSize)*1.5);
+    font-size-adjust: 20px;
+}
+
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 960px) {
     .about {
@@ -308,6 +318,22 @@ div#guestbook .scrollable {
 /*================================================================*/
 /* PROJECTS */
 /*================================================================*/
+.projects {
+    padding: 0;
+}
+
+div#projects .sidebar {
+    width: 30%;
+}
+
+div#projects .content {
+    width: 70%;
+}
+
+div#projects a:hover {
+    font-size:calc(var(--fontDefSize)*1.5);
+    font-size-adjust: 20px;
+}
 
 @media screen and (max-width: 960px) {
     .projects {

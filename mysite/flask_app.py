@@ -67,13 +67,20 @@ def hello_world(page=None,subpage=None):
     panel0=panel1=''
 
     if (page==None):
+        page='landing'
         contentObj=landing()
     elif (page=='about'):
-        contentObj=about()
+        if subpage==None:
+            contentObj=about()
+        else:
+            contentObj=about(subpage)
     elif (page=='guestbook'):
         contentObj=guestbook()
     elif (page=='projects'):
-        contentObj=projects()
+        if subpage==None:
+            contentObj=projects()
+        else:
+            contentObj=projects(subpage)
     elif (page=='posts'):
         if (subpage!=None):
             contentObj=posts(subpage)
@@ -93,7 +100,7 @@ def hello_world(page=None,subpage=None):
     pageName=contentObj['pageName']
     panelHeader=header(page)
     panelFooter=footer()
-    page=renderHtml('page').format(pageName=pageName,header=panelHeader,panel0=panel0,panel1=panel1,footer=panelFooter)
+    page=renderHtml('page').format(wrapper=page,pageName=pageName,header=panelHeader,panel0=panel0,panel1=panel1,footer=panelFooter)
     return page
 
 # function type: render object
@@ -141,15 +148,38 @@ def landing(alert=None):
     return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 
 # function type: render page
-def projects():
+def about(subpage=None):
+    folder='about'
+    errorCode=True
+    errorMessage=None
+    pageName='About'
+    panel0=panel1=''
+
+    try:
+        if subpage:
+            panel1=listEntries('about',0,1,subpage)
+        else:
+            panel1=renderHtml('about',folder)
+        panel0=listEntries('about',0,0,subpage)
+        errorCode=False
+    except Exception as e:
+        errorMessage=str(e)
+
+    return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+
+# function type: render page
+def projects(subpage=None):
     folder='projects'
     errorCode=True
     errorMessage=None
     pageName='Projects'
     panel0=panel1=''
     try:
-        panel0=listEntries('projects',0)
-        panel1=renderHtml('projects',folder)
+        if subpage:
+            panel1=listEntries('projects',0,1,subpage)
+        else:
+            panel1=renderHtml('projects',folder)
+        panel0=listEntries('projects',0,0,subpage)
     except Exception as e:
         #errorMessage=str(e)
         panel0='fail -'+str(e)
@@ -173,7 +203,7 @@ def guestbook(alert=None):
     pageName='Guestbook'
     panel0=panel1=''
 
-    allEntries=listEntries('guestbook',0)
+    allEntries=listEntries('guestbook',0,0)
 
     try:
         #newEntry=''
@@ -182,8 +212,6 @@ def guestbook(alert=None):
                 alertMessage='<body onLoad="myFunction(false);">'
             else:
                 alertMessage='<body onLoad="myFunction(true);">'
-        #content+='alert: ' + str(not alert)
-        #content+=renderHtml('guestbook',folder).format(alert=alertMessage,allEntries=allEntries,newEntry=newEntry)
         content+=renderHtml('guestbook',folder).format(alert=alertMessage,allEntries=allEntries)
         errorCode=False
     except Exception as e:
@@ -199,13 +227,16 @@ def guestbook(alert=None):
 #tableObj0={'tag':0,'tablename':'announcements','columns':tableObj0a,'formInputType':tableObj0b,'valuesArray':tableObj0c}
 
 dbTableObj0a=['row_id','publishStatusTag','dateAdded','sender','category','others','message','epochTime']
-dbTableObject0={'tag':0,'tableName':'guestbook','columns':dbTableObj0a,'grouping':None,'sortBy':'epochTime'}
+dbTableObj0b=arrayGuestCategory
+dbTableObject0={'tag':0,'tableName':'guestbook','columns':dbTableObj0a,'grouping':dbTableObj0b,'sortBy':'epochTime','sortBy1':'category'}
 
 dbTableObj1a=['row_id','publishStatusTag','dateAdded','category','displayOrder','file','title','link','skills','media','epochTime']
-dbTableObject1={'tag':1,'tableName':'projects','columns':dbTableObj1a,'grouping':'category','sortBy':'epochTime'}
+dbTableObj1b={0:{'tag':0,'label':'Embedded Systems'},1:{'tag':1,'label':'Software Development'},2:{'tag':2,'label':'Hardware Development'}}
+dbTableObject1={'tag':1,'tableName':'projects','columns':dbTableObj1a,'grouping':dbTableObj1b,'sortBy':'category','sortBy1':'epochTime'}
 
 dbTableObj2a=['row_id','publishStatusTag','dateAdded','category','displayOrder','file','title','duration','position','link','media','epochTime']
-dbTableObject2={'tag':2,'tableName':'about','columns':dbTableObj2a,'grouping':'category','sortBy':'epochTime'}
+dbTableObj2b={0:{'tag':0,'label':'Primary/Secondary Education'},1:{'tag':1,'label':'Tertiary Education'},2:{'tag':2,'label':'Professional Experience'}}
+dbTableObject2={'tag':2,'tableName':'about','columns':dbTableObj2a,'grouping':dbTableObj2b,'sortBy':'category','sortBy1':'epochTime'}
 
 dbTableArray=[dbTableObject0,dbTableObject1,dbTableObject2]
 
@@ -220,11 +251,12 @@ def convertArrayToObject(obj,table):
     return dict(zip(arrayColumns,obj))
 
 # function type: operational
-def listEntries(table,sortBy=0,mode=None):
+def listEntries(table,sortBy=0,mode=0,subpage=None):
+    #mode 0 = panel 0, mode 1 = panel 1
     folder=table
     dbObj=initDatabase()
     db1=dbObj['cursor']
-    content=''
+    content=temp=''
     obj={}
 
     #get dbTableObject based on tableName
@@ -233,15 +265,20 @@ def listEntries(table,sortBy=0,mode=None):
             tableName=dbTableObject['tableName']
             grouping=dbTableObject['grouping']
             sortBy=dbTableObject['sortBy']
+            sortBy1=dbTableObject['sortBy1']
 
-    db1.execute('SELECT * FROM {} ORDER BY {} DESC LIMIT 0, 49999;'.format(tableName,sortBy))
+    db1.execute('SELECT * FROM {} ORDER BY {} DESC, {} DESC LIMIT 0, 49999;'.format(tableName,sortBy,sortBy1))
     ll=db1.fetchall()
 
     try:
         for l in ll:
+            obj=convertArrayToObject(l,tableName)
+            row_id=obj['row_id']
+            category=obj['category']
+            temp0=grouping[category]
+            temp1=temp0['label']
             if tableName=='guestbook':
                 folder='entries'
-                obj=convertArrayToObject(l,tableName)
                 sender=obj['sender']
                 category=obj['category']
                 for guestCategory in arrayGuestCategory:
@@ -251,12 +288,33 @@ def listEntries(table,sortBy=0,mode=None):
                 displayDateAdded=renderHtml('displayDateAdded',folder).format(year=dateAdded[0:4],month=dateAdded[4:6],day=dateAdded[6:8])
                 message=obj['message']
                 content+=renderHtml('entry',folder).format(symbol=symbol,sender=sender,dateAdded=displayDateAdded,message=message)
-            else:
-                obj=convertArrayToObject(l,tableName)
-                content+=renderHtml('sidebarObject',folder).format(obj['title'])
+            elif tableName=='about':
+                if mode==0:
+                    if temp!=category:
+                        temp=category
+                        content+=renderHtml('sidebarHeadingObject',folder).format(temp1)
+                    if str(subpage)==str(row_id):
+                        content+=renderHtml('sidebarObjectActive',folder).format(str(obj['row_id']),obj['title'])
+                    else:
+                        content+=renderHtml('sidebarObject',folder).format(str(obj['row_id']),obj['title'])
+                else:
+                    if str(subpage)==str(row_id):
+                        content+=renderHtml('contentObject',folder).format(obj['duration'],obj['position'],renderHtml('content',folder+'/'+obj['file']))
+            else: #projects
+                if mode==0:
+                    if temp!=category:
+                        temp=category
+                        content+=renderHtml('sidebarHeadingObject',folder).format(temp1)
+                    if str(subpage)==str(row_id):
+                        content+=renderHtml('sidebarObjectActive',folder).format(str(obj['row_id']),obj['title'])
+                    else:
+                        content+=renderHtml('sidebarObject',folder).format(str(obj['row_id']),obj['title'])
+                else:
+                    if str(subpage)==str(row_id):
+                        content+=renderHtml('contentObject',folder).format(obj['title'],renderHtml('content',folder+'/'+obj['file']))
     except Exception as e:
         errorMessage=e
-        content=str(errorMessage)
+        content+=str(errorMessage)
 
     output=content
     return output
@@ -407,23 +465,6 @@ def posts(subpage=None):
         content+=errorMessage
 
     panel0=content
-    return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
-
-# function type: render page
-def about():
-    folder='about'
-    errorCode=True
-    errorMessage=None
-    pageName='About'
-    panel0=panel1=''
-
-    try:
-        panel0=listEntries('about',0)
-        panel1=renderHtml('about',folder)
-        errorCode=False
-    except Exception as e:
-        errorMessage=str(e)
-
     return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 
 # function type: operational
