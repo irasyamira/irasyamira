@@ -170,35 +170,35 @@ a:active {
 /* HEADER */
 /*================================================================*/
 
-div#header .column {
-    text-align: center;
+div#header {
+    background-color: var(--colour3);
 }
 
 .topnav {
-    display: flex;
-    justify-content: space-around;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: stretch;
+	align-content: center;
 }
 
-.topnav .column a {
+.headerObject {
+    width: 100%;
+    padding: 2%;
+	text-align: center;
+}
+
+.active, .headerObject:hover {
+    background-color: var(--colour3);
+}
+
+.topnav a {
     display: block;
     color: var(--colour1);
     padding: 1px 1px;
     text-decoration: none;
     font-size: 1.5em;
-}
-
-.topnav .column a.active {
-    background-color: var(--colour3);
-    color: var(--colour1);
-}
-
-.topnav .column a:hover:not(.active) {
-    background-color: var(--colour3);
-    color: var(--colour1);
-}
-
-div#header hr {
-    border: 2px solid var(--colour2);
 }
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
@@ -296,11 +296,11 @@ div#guestbook .scrollable {
 }
 
 div#about .sidebar {
-    width: 40%;
+    width: 30%;
 }
 
 div#about .content {
-    width: 60%;
+    width: 70%;
 }
 
 div#about a:hover {
@@ -323,11 +323,11 @@ div#about a:hover {
 }
 
 div#projects .sidebar {
-    width: 40%;
+    width: 30%;
 }
 
 div#projects .content {
-    width: 60%;
+    width: 70%;
 }
 
 div#projects a:hover {

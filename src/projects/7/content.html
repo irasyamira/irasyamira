@@ -1,1 +1,35 @@
 A blog-type website built using Flask framework running on Python as the back-end and HTML/CSS/Javascript for the front-end. Features a virtual guestbook and blog entries which uses MySQL database for storage, interfaced via Python.
+<br>
+<br>
+This post is simply a walk-through on my thought process throughout building this website. It is not in any way intended to be used as a guidance or tutorial. I am not a professional web developer, most of my methods and reasoning may not be correct or of standard practice. I am hoping to constantly improve as I add more content and make more adjustments to the website moving forward (ෆ˙ᵕ˙ෆ)
+<br>
+<br>
+<b><u>1. Domain Setup</u></b>
+<br>
+I first purchased a domain from a domain name registrar. I have used <a href="https://porkbun.com/">porkbun.com</a> before for a different project and was happy with the service after a year of usage, so I decided to repurchase from them. The annual fee is reasonable and there has never been a hidden fee so I highly recommend it if you are looking to getting a domain for yourself too!
+<br>
+<br>
+<b><u>2. Web Hosting</u></b>
+<br>
+Since I will be using Python for the backend of the website, I chose an online integrated development environment (IDE) that I was already familiar with - Pythonanywhere. Pythonanywhere is a web hosting service (Platform as a service) which simply means it is a platform that will help keep your web app source code running in the cloud rather than having to use your own local machine. The free package will allow users to host their web app on a free pythonanywhere.com subdomain (i.e. irasyamira.pythonanywhere.com). Any paid package allows a custom domain (i.e. irasyamira.com).
+<br>
+<br>
+<b><u>3. Front-end</u></b>
+<br>
+I started off by making a rough virtual sketch on how I would like the website to look like. This includes deciding on the placement of the three main objects of a webpage - a navigation bar, the main panel/content and a footer. I started coding the skeleton for the three main objects using purely HTML and CSS. Then, I proceeded to content population before narrowing down the details for each object. It was important for me to see how each content would fit in the main panel. Some content may need two columns (i.e. the About page) and some may need card type subpanels (i.e. the Posts page).
+<br>
+<br>
+<b><u>4. Database Setup</u></b>
+<br>
+I initialized a MySql database simply by initializing the keys and test values manually using SQLiteDatabaseBrowser, a software that helps visualizes .db files. Initialization of database can be done using Python but for testing purposes it was quicker to manipulate the database as needed using the GUI.
+<br>
+<br>
+<b><u>5. Back-end</u></b>
+<br>
+Using Python, I started coding the logics of the website. This includes routing of subdirectories, handling POST requests and manipulating the database dynamically through user input.
+<br>
+<br>
+<b><u>6. Refinement</u></b>
+<br>
+Once the dynamic content has been populated, I moved on to typing out the posts, adding relevant texts and description, followed by refining the looks of the website. This includes adjusting the appearance of the main panel to suit the type of content as aforementioned. Javascript functions for popups and alerts were then added to complete the functionalities of the website.
+<br>

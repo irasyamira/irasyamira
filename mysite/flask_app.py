@@ -1,10 +1,9 @@
 # A very simple Flask Hello World app for you to get started with...
-import sqlite3
-import time
-from flask import Flask, request, redirect
-from datetime import datetime
-
 import os
+import time
+import sqlite3
+from datetime import datetime
+from flask import Flask, request, redirect
 
 app = Flask(__name__)
 
@@ -19,17 +18,30 @@ headerObject4={'tag':'posts','link':'/posts'}
 headerObject5={'tag':'projects','link':'/projects'}
 arrayHeaderObject=[headerObject0,headerObject1,headerObject5]
 
-guestCategory0={'tag':0,'label':'family','symbol':'👪'}
-guestCategory1={'tag':1,'label':'primary school','symbol':'🎒'}
-guestCategory2={'tag':2,'label':'secondary school','symbol':'🏫'}
-guestCategory3={'tag':3,'label':'college','symbol':'📚'}
-guestCategory4={'tag':4,'label':'university','symbol':'🎓'}
-guestCategory5={'tag':5,'label':'workplace','symbol':'👔'}
-guestCategory6={'tag':6,'label':'acquaintance','symbol':'😀'}
-guestCategory7={'tag':7,'label':'socials','symbol':'🍷'}
-guestCategory8={'tag':8,'label':'others','symbol':'⭐'}
-guestCategory9={'tag':9,'label':'rather not say','symbol':'🥔'}
-arrayGuestCategory=[guestCategory0,guestCategory1,guestCategory2,guestCategory3,guestCategory4,guestCategory5,guestCategory6,guestCategory7,guestCategory8,guestCategory9]
+'''
+guestbookTableKey6={'tag':6,'displayName':'message','render':1,'inputTypeTag':6}
+arrayGuestbookTableKey
+'''
+
+# from dwellingsouls - announcement table details
+#tableObj0a=['row_id','publishStatusTag','epochTime','addedDate','lastEditedDate','content']
+#tableObj0b=[7,12,7,7,7,22]
+#tableObj0c=[None,[{'tag':0,'displayName':'Draft'},{'tag':1,'displayName':'Publish'}],int(time.time()),datetime.today().strftime('%Y%m%d'),datetime.today().strftime('%Y%m%d'),None]
+#tableObj0={'tag':0,'tablename':'announcements','columns':tableObj0a,'formInputType':tableObj0b,'valuesArray':tableObj0c}
+
+dbTableObj0a=['row_id','publishStatusTag','dateAdded','sender','category','others','message','epochTime']
+dbTableObj0b={0:{'label':'family','symbol':'👪'},1:{'label':'primary school','symbol':'🎒'},2:{'label':'secondary school','symbol':'🏫'},3:{'label':'college','symbol':'📚'},4:{'label':'university','symbol':'🎓'},5:{'label':'workplace','symbol':'👔'},6:{'label':'acquaintance','symbol':'😀'},7:{'label':'socials','symbol':'🍷'},8:{'label':'others','symbol':'⭐'},9:{'label':'rather not say','symbol':'🥔'}}
+dbTableObject0={'tag':0,'tableName':'guestbook','columns':dbTableObj0a,'grouping':dbTableObj0b,'sortBy':'epochTime','sortBy1':'category'}
+
+dbTableObj1a=['row_id','publishStatusTag','dateAdded','category','displayOrder','file','title','link','skills','media','epochTime']
+dbTableObj1b={0:{'tag':0,'label':'Embedded Systems'},1:{'tag':1,'label':'Software Development'},2:{'tag':2,'label':'Hardware Development'}}
+dbTableObject1={'tag':1,'tableName':'projects','columns':dbTableObj1a,'grouping':dbTableObj1b,'sortBy':'category','sortBy1':'epochTime'}
+
+dbTableObj2a=['row_id','publishStatusTag','dateAdded','category','displayOrder','file','title','duration','position','link','media','epochTime']
+dbTableObj2b={0:{'tag':0,'label':'Primary/Secondary Education'},1:{'tag':1,'label':'Tertiary Education'},2:{'tag':2,'label':'Professional Experience'}}
+dbTableObject2={'tag':2,'tableName':'about','columns':dbTableObj2a,'grouping':dbTableObj2b,'sortBy':'category','sortBy1':'epochTime'}
+
+dbTableArray=[dbTableObject0,dbTableObject1,dbTableObject2]
 
 '''
 guestbookTableKey0={'tag':0,'displayName':'row_id','render':0,'inputTypeTag':1}
@@ -74,18 +86,11 @@ def hello_world(page=None,subpage=None):
             contentObj=about()
         else:
             contentObj=about(subpage)
-    elif (page=='guestbook'):
-        contentObj=guestbook()
     elif (page=='projects'):
         if subpage==None:
             contentObj=projects()
         else:
             contentObj=projects(subpage)
-    elif (page=='posts'):
-        if (subpage!=None):
-            contentObj=posts(subpage)
-        else:
-            contentObj=posts()
     elif (page=='reviewEntry'):
         contentObj=reviewEntry()
     elif (page=='editDatabase'):
@@ -121,7 +126,7 @@ def header(page=None):
     for obj in arrayHeaderObject:
         objectName=obj['tag']
         link=obj['link']
-        if (str(page)==str(None)):
+        if (page==None):
             page='home'
         if (page==objectName):
             headerObjects+=renderHtml('headerObjectActive',folder).format(link=link,pageName=objectName.upper())
@@ -186,15 +191,6 @@ def projects(subpage=None):
     return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 
 # function type: render object
-def sidebarProjects():
-    return True
-
-'''
-guestbookTableKey6={'tag':6,'displayName':'message','render':1,'inputTypeTag':6}
-arrayGuestbookTableKey
-'''
-
-# function type: render object
 def guestbook(alert=None):
     folder='guestbook'
     errorMessage=None
@@ -220,34 +216,12 @@ def guestbook(alert=None):
     panel0=content
     return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 
-# from dwellingsouls - announcement table details
-#tableObj0a=['row_id','publishStatusTag','epochTime','addedDate','lastEditedDate','content']
-#tableObj0b=[7,12,7,7,7,22]
-#tableObj0c=[None,[{'tag':0,'displayName':'Draft'},{'tag':1,'displayName':'Publish'}],int(time.time()),datetime.today().strftime('%Y%m%d'),datetime.today().strftime('%Y%m%d'),None]
-#tableObj0={'tag':0,'tablename':'announcements','columns':tableObj0a,'formInputType':tableObj0b,'valuesArray':tableObj0c}
-
-dbTableObj0a=['row_id','publishStatusTag','dateAdded','sender','category','others','message','epochTime']
-dbTableObj0b=arrayGuestCategory
-dbTableObject0={'tag':0,'tableName':'guestbook','columns':dbTableObj0a,'grouping':dbTableObj0b,'sortBy':'epochTime','sortBy1':'category'}
-
-dbTableObj1a=['row_id','publishStatusTag','dateAdded','category','displayOrder','file','title','link','skills','media','epochTime']
-dbTableObj1b={0:{'tag':0,'label':'Embedded Systems'},1:{'tag':1,'label':'Software Development'},2:{'tag':2,'label':'Hardware Development'}}
-dbTableObject1={'tag':1,'tableName':'projects','columns':dbTableObj1a,'grouping':dbTableObj1b,'sortBy':'category','sortBy1':'epochTime'}
-
-dbTableObj2a=['row_id','publishStatusTag','dateAdded','category','displayOrder','file','title','duration','position','link','media','epochTime']
-dbTableObj2b={0:{'tag':0,'label':'Primary/Secondary Education'},1:{'tag':1,'label':'Tertiary Education'},2:{'tag':2,'label':'Professional Experience'}}
-dbTableObject2={'tag':2,'tableName':'about','columns':dbTableObj2a,'grouping':dbTableObj2b,'sortBy':'category','sortBy1':'epochTime'}
-
-dbTableArray=[dbTableObject0,dbTableObject1,dbTableObject2]
-
 # function type: operational
 def convertArrayToObject(obj,table):
     for dbTableObject in dbTableArray:
         if table==dbTableObject['tableName']:
             arrayColumns=dbTableObject['columns']
 
-    #[row_id,publishStatusTag,dateAdded,sender,category,others,message,epochTime]=obj
-    #return {'row_id':row_id,'sender':sender,'message':message,'dateAdded':dateAdded,'publishStatusTag':publishStatusTag,'category':category,'others':others,'epochTime':epochTime}
     return dict(zip(arrayColumns,obj))
 
 # function type: operational
@@ -280,10 +254,7 @@ def listEntries(table,sortBy=0,mode=0,subpage=None):
             if tableName=='guestbook':
                 folder='entries'
                 sender=obj['sender']
-                category=obj['category']
-                for guestCategory in arrayGuestCategory:
-                    if category==guestCategory['tag']:
-                        symbol=guestCategory['symbol']
+                symbol=temp0['symbol']
                 dateAdded=str(obj['dateAdded'])
                 displayDateAdded=renderHtml('displayDateAdded',folder).format(year=dateAdded[0:4],month=dateAdded[4:6],day=dateAdded[6:8])
                 message=obj['message']
@@ -331,10 +302,8 @@ def reviewEntry():
     try:
         sender=request.form['name']
         message=request.form['message']
-        category=request.form['category']
-        for guestCategory in arrayGuestCategory:
-            if int(category)==guestCategory['tag']:
-                symbol=guestCategory['symbol']
+        category=int(request.form['category'])
+        symbol=dbTableObj0b[category]
         displayDateAdded=datetime.today().strftime('%Y%m%d')
         content+=renderHtml('reviewEntry',folder).format(symbol=symbol,sender=sender,displayDateAdded=displayDateAdded,message=message,publishStatusTag=1,dateAdded=displayDateAdded,category=category,others=None)
         errorCode=False
@@ -387,85 +356,6 @@ def initDatabase():
     guestbookDb=sqlite3.connect(dbPath, check_same_thread=False)
     db1=guestbookDb.cursor()
     return {'cursor':db1,'database':guestbookDb}
-
-# function type: render page
-def posts(subpage=None):
-    folder='posts'
-    errorCode=True
-    errorMessage=''
-    pageName='Posts'
-    ttt=content=sidenav=slide=''
-    panel0=panel1=''
-
-    tt=[{'title':'Making of this website','content':'intel','dateAdded':'20210706','link':7},
-	{'title':'My experience in Intel PSG','content':'intel','dateAdded':'20210705','link':0},
-    {'title':'My experience in Awantec','content':'awantec','dateAdded':'20210705','link':3},
-    {'title':'My experience in University of Auckland','content':'uoa','dateAdded':'20210705','link':1},
-    {'title':'My experience in Kolej Mara Banting','content':'kmb','dateAdded':'20210704','link':4},
-    {'title':'My experience in Universiti Malaya','content':'um','dateAdded':'20210703','link':6},
-    {'title':'My experience in Sekolah Seri Puteri','content':'ssp','dateAdded':'20210703','link':2},
-    {'title':'My experience in Sekolah Kebangsaan Putrajaya Presint 9 (1)','content':'skpj2','dateAdded':'20210703','link':5}]
-    try:
-        if (subpage!=None):
-            found=False
-            for t in tt:
-                link=t['link']
-                if (int(subpage)==link):
-                    path=os.getcwd()+'/src/posts/'+str(link)+'/img/'
-                    count=0
-                    f=ff=''
-                    for file in os.listdir(path):
-                        count+=1
-                        f+=renderHtml('img',folder).format(link=link,img=file) #,img1=img1,img2=img2)
-                        ff+=renderHtml('imgCount',folder).format(count=str(count)) #,img1=img1,img2=img2)
-
-                    slide=renderHtml('slide',folder).format(slides=f,count=ff)
-                    found=True
-                    pageName=title=t['title']
-
-                    path='/posts/{}'.format(str(link))
-                    entry=renderHtml('entry',path)
-
-                    dateAdded=t['dateAdded']
-                    ttt+=renderHtml('entry',folder).format(slide=slide,title=title,year=dateAdded[0:4],month=dateAdded[4:6],day=dateAdded[6:8],entry=entry)
-                    break
-            if (found==False):
-                ttt='post does not exist'
-        else:
-            for t in tt:
-                title=t['title']
-                link=t['link']
-                #content=os.getcwd()+'/src/posts/'+str(link)+'/entry'
-                path='/posts/{}'.format(str(link))
-                entry=renderHtml('entry',path)
-
-                path=os.getcwd()+'/src/posts/'+str(link)+'/img/'
-                count=0
-                for file in os.listdir(path):
-                    try:
-                        img='/src/posts/'+str(link)+'/img/{}'.format(file)
-                        break
-                    except Exception as e:
-                        errorMessage+=str(e)
-                        continue
-                preview=entry[0:80]
-                dateAdded=t['dateAdded']
-                ttt+=renderHtml('preview',folder).format(img=img,title=title,year=dateAdded[0:4],month=dateAdded[4:6],day=dateAdded[6:8],preview=preview,link=link)
-        #render sidenav
-        for t in tt:
-            title=t['title']
-            link=t['link']
-            sidenav+=renderHtml('sidenavObj',folder).format(title=title,link=link)
-
-
-        content=renderHtml('posts',folder).format(sidenav=sidenav,posts=ttt)
-        errorCode=False
-    except Exception as e:
-        errorMessage+=str(e)
-        content+=errorMessage
-
-    panel0=content
-    return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 
 # function type: operational
 def renderHtml(filename,path=None):

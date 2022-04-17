@@ -170,16 +170,22 @@ a:active {
 /* HEADER */
 /*================================================================*/
 
-div#header .column {
-    text-align: center;
-}
-
 .topnav {
-    display: flex;
-    justify-content: space-around;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: stretch;
+	align-content: center;
+    width: 100%;
+}
+.content nav {
+    width: 100%;
+    color: black;
+    background-color: var(--colour3);
 }
 
-.topnav .column a {
+.topnav a {
     display: block;
     color: var(--colour1);
     padding: 1px 1px;
@@ -187,18 +193,16 @@ div#header .column {
     font-size: 1.5em;
 }
 
-.topnav .column a.active {
+.topnav a.active {
     background-color: var(--colour3);
-    color: var(--colour1);
 }
 
-.topnav .column a:hover:not(.active) {
+.topnav a:hover:not(.active) {
     background-color: var(--colour3);
-    color: var(--colour1);
 }
 
-div#header hr {
-    border: 2px solid var(--colour2);
+div#headerObject.active {
+    background-color: var(--colour3);
 }
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
