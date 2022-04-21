@@ -39,19 +39,10 @@ body {
     background-color: var(--colour0);
 }
 
-.container {
-    padding: 0;
-	margin: 0;
-}
-
-@media screen and (max-width: 960px) {
-    .container {
-        padding: 0;
-    	margin: 0;
-    }
-    .main {
-        padding: 0;
-    }
+footer {
+    margin-top: auto;
+    text-align: center;
+    padding-top: 2%;
 }
 
 hr {
@@ -59,8 +50,8 @@ hr {
 }
 
 img {
-    border-radius: 1em;
-    filter: drop-shadow(2px 2px 2px var(--colour5)) contrast(0.7) saturate(1);
+    border-radius: 0.3em;
+    filter: drop-shadow(5px 5px 5px var(--colour3)) contrast(0.8) saturate(1);
 }
 
 p {
@@ -142,11 +133,13 @@ a:active {
 .content {
     width: 50%;
     float: left;
+    padding: 2% 5%;
 }
 
 .sidebar {
     width: 50%;
     float: left;
+    padding: 2% 5%;
 }
 
 /* Clear floats after the columns */
@@ -163,7 +156,15 @@ a:active {
 
 /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 960px) {
+    .content {
+        width: 100%;
+        padding: 0 2%;
+    }
 
+    .sidebar {
+        width: 100%;
+        padding: 0 2%;
+    }
 }
 
 /*================================================================*/
@@ -178,9 +179,9 @@ div#header {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
-	justify-content: space-between;
+	justify-content: space-evenly;
 	align-items: stretch;
-	align-content: center;
+	align-content: stretch;
 }
 
 .headerObject {
@@ -201,10 +202,6 @@ div#header {
     font-size: 1.5em;
 }
 
-/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 960px) {
-}
-
 /*================================================================*/
 /* LANDING */
 /*================================================================*/
@@ -214,38 +211,11 @@ div#header {
 }
 
 div#landing .sidebar {
-    width: 70%;
+    width: 50%;
 }
 
 div#landing .content {
-    width: 30%;
-}
-
-/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 960px) {
-    .landing {
-        padding: 0 ;
-    }
-    div#landing .sidebar {
-        width: 100%;
-    }
-
-    div#landing .content {
-        width: 100%;
-    }
-}
-
-.mySlides {
-    display:none
-
-}
-.w3-left, .w3-right, .w3-badge {
-    cursor:pointer
-}
-.w3-badge {
-    height:13px;
-    width:13px;
-    padding:0
+    width: 50%;
 }
 
 /*================================================================*/
@@ -264,7 +234,7 @@ div#guestbook hr {
 }
 
 div#guestbook .scrollable {
-    height: 30vh;
+    height: 20vh;
 }
 
 .reviewEntry {
@@ -282,18 +252,13 @@ div#guestbook .scrollable {
     height: 6vh;
 }
 
-
-/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 960) {
-
+div#guestbook .scrollable {
+    height: 25vh;
 }
 
 /*================================================================*/
 /* ABOUT */
 /*================================================================*/
-.about {
-    padding: 0;
-}
 
 div#about .sidebar {
     width: 30%;
@@ -304,23 +269,12 @@ div#about .content {
 }
 
 div#about a:hover {
-    font-size:calc(var(--fontDefSize)*1.5);
-    font-size-adjust: 20px;
-}
-
-/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 960px) {
-    .about {
-        padding: 0;
-    }
+    color: var(--colour2);
 }
 
 /*================================================================*/
 /* PROJECTS */
 /*================================================================*/
-.projects {
-    padding: 0;
-}
 
 div#projects .sidebar {
     width: 30%;
@@ -331,122 +285,5 @@ div#projects .content {
 }
 
 div#projects a:hover {
-    font-size:calc(var(--fontDefSize)*1.5);
-    font-size-adjust: 20px;
+    color: var(--colour2);
 }
-
-@media screen and (max-width: 960px) {
-    .projects {
-        padding: 0;
-    }
-}
-
-/*================================================================*/
-/* POSTS */
-/*================================================================*/
-.posts {
-    padding: 1.5% 2%;
-}
-
-.posts .row {
-    padding: 1% 1%;
-    text-align: justify;
-}
-
-.posts div#row hr {
-    border: 0.4px dashed var(--colour2);
-}
-
-.posts div#details {
-    color: var(--colour5);
-}
-
-div#posts .collapsible {
-    padding: 0.2% 5%;
-}
-
-/* Create two equal columns that floats next to each other */
-div#posts .column {
-    float: left;
-    padding: 10px;
-}
-
-div#posts .sidenav {
-    width: 25%;
-}
-
-div#posts .main {
-    width: 75%;
-}
-
-div#posts .left {
-    width: 30%;
-}
-
-div#posts .right {
-    width: 70%;
-}
-
-/* Clear floats after the columns */
-div#posts .row {
-    padding: 1.5% 5%;
-}
-
-/* Clear floats after the columns */
-div#posts .row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-div#posts img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 1% 2%;
-    width: 100%;
-}
-
-div.gallery {
-    margin: 5px;
-    border: 0px solid #ccc;
-    float: left;
-    width: 30%;
-    padding: 5% 1%;
-}
-
-div.gallery:hover {
-  border: 1px solid #777;
-}
-
-div.gallery img {
-  display: block;
-  max-width: 100%;
-  max-height: 30vh;
-  width: auto;
-  height: auto;
-}
-
-div.desc {
-  padding: 15px;
-  text-align: center;
-}
-
-/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
-
-}
-
-/*================================================================*/
-/* FOOTER */
-/*================================================================*/
-
-.footer {
-    margin-top: auto;
-    text-align: center;
-}
-
-div#footer .container {
-    padding: 0;
-}
-

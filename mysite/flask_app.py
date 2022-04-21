@@ -1,5 +1,4 @@
 # A very simple Flask Hello World app for you to get started with...
-import os
 import time
 import sqlite3
 from datetime import datetime

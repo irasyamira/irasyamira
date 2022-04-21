@@ -1,14 +1,15 @@
 {alert}
-<div class="row">
-    <h2>Guestbook</h2>
+<div class="row" id="guestbook">
+    <p><img src="/src/guestbook/guestbookLogo.png"/> Guestbook</p>
+    <hr>
     <div class="scrollable">
         {allEntries}
     </div>
+    <hr>
 </div>
-<div class="row">
+<div class="row" id="guestbook">
     <form name="input" action="/reviewEntry" method="post">
         <div class="row">
-            <h4>Say Hi!</h4>
             <div class="column">
                 <label for="name"><h7>Name:</h7></label>
                 <input type="text" id="name" name="name" value=""required>
@@ -31,9 +32,11 @@
             </div>
         </div>
         <div class="row">
-            <label for="message"><h7>Message</h7></label>
-            <textarea class="messageBox" id="message" name="message" placeholder="Please keep language and message respectful, thank you!" required></textarea>
-            <button class="submitButton" name="submit" type="submit" value="">Submit</button>
+            <label for="message"><h7>Message for the Guestbook:</h7></label>
+            <textarea id="message" name="message" placeholder="Please keep language and message respectful, thank you!" required></textarea>
+        </div>
+        <div class="row">
+            <button name="submit" type="submit" value="">Submit</button>
         </div>
     </form>
 </div>

@@ -28,7 +28,7 @@
 <meta property="twitter:image" content="/src/thumb5.png">
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="/src/page.css">
+<link rel="stylesheet" href="/src/page4.css">
 
 <title>{pageName}</title>
 
@@ -37,28 +37,18 @@
 <body>
 
 <header>
-  <div class="wrap" id="header">
-    <!-- nav class is added here -->
     {header}
-    <!div class="content nav">
-
-    <!/div>
-  </div>
 </header>
 
 <div class="main">
-  <div class="wrap" id="{wrapper}">
-    <!-- content and sidebar are swapped. They can be made to show in the order above with CSS -->
-    <div class="sidebar">{panel0}</div>
-    <div class="content">{panel1}</div>
-  </div>
+    <div class="wrap" id="{wrapper}">
+        <div class="sidebar">{panel0}</div>
+        <div class="content">{panel1}</div>
+    </div>
 </div>
 
 <footer>
-  <div class="wrap">
-    <div class="sidebar"></div>
-    <div class="content">{footer}</div>
-  </div>
+    {footer}
 </footer>
 
 <script src="/src/page.js"></script>
