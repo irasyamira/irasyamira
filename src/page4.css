@@ -234,23 +234,20 @@ a:active {
 
 @media screen and (max-width: 960px) {
     .headerObject {
-    	width:  100%;
     	text-align: center;
+    	padding: 1% 0;
     }
     .topnav a {
         font-size: calc(var(--fontDefSize)*1.8);
-    }
-    .headerObject {
-    	padding: 1% 0;
     }
     .topnav {
     	display: flex;
     	flex-direction: row;
     	flex-wrap: nowrap;
-    	justify-content: space-between;
+    	justify-content: space-around;
     	align-items: stretch;
     	align-content: stretch;
-        padding-left: 0;
+        padding: 0;
     }
 }
 
