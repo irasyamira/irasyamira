@@ -48,6 +48,7 @@ hr {
 img {
     border-radius: 0.3em;
     filter: drop-shadow(5px 5px 5px var(--colour3)) contrast(0.8) saturate(1);
+    width: 100%;
 }
 
 p {
@@ -167,6 +168,12 @@ a:active {
     padding-top: 2%;
     padding-right: 5%;
     padding-left: 1%;
+}
+
+div#oneColumn {
+    width: 100%;
+    padding-top: 1%;
+    padding-left: 5%;
 }
 
 .sidebar {
@@ -290,7 +297,7 @@ div#guestbook .scrollable hr {
 }
 
 div#guestbook .scrollable {
-    height: 25vh;
+    height: 28vh;
 }
 
 div#guestbook .column {
@@ -317,34 +324,36 @@ div#guestbook > img, div#guestbook > p {
     display: inline;
 }
 
-div#guestbook button {
-    width: 20%;
-}
-
 @media screen and (max-width: 960px) {
     div#guestbook .column {
         width: 100%;
         padding-right: 0;
     }
-    div#guestbook button {
-        width: 100%;
-    }
 }
+
+/*================================================================*/
+/* TIMELINE */
+/*================================================================*/
+
 
 /*================================================================*/
 /* ABOUT */
 /*================================================================*/
 
 div#about .sidebar {
-    width: 30%;
+    width: 70%;
 }
 
 div#about .content {
-    width: 70%;
+    width: 30%;
 }
 
 div#about a:hover {
     color: var(--colour2);
+}
+
+div#about img {
+    padding: 1% 20%;
 }
 
 @media screen and (max-width: 960px) {
@@ -362,11 +371,11 @@ div#about a:hover {
 /*================================================================*/
 
 div#projects .sidebar {
-    width: 30%;
+    width: 70%;
 }
 
 div#projects .content {
-    width: 70%;
+    width: 30%;
 }
 
 div#projects a:hover {

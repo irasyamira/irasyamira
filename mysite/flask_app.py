@@ -30,15 +30,15 @@ arrayGuestbookTableKey
 
 dbTableObj0a=['row_id','publishStatusTag','dateAdded','sender','category','others','message','epochTime']
 dbTableObj0b={0:{'label':'family','symbol':'👪'},1:{'label':'primary school','symbol':'🎒'},2:{'label':'secondary school','symbol':'🏫'},3:{'label':'college','symbol':'📚'},4:{'label':'university','symbol':'🎓'},5:{'label':'workplace','symbol':'👔'},6:{'label':'acquaintance','symbol':'😀'},7:{'label':'socials','symbol':'🍷'},8:{'label':'others','symbol':'⭐'},9:{'label':'rather not say','symbol':'🥔'}}
-dbTableObject0={'tag':0,'tableName':'guestbook','columns':dbTableObj0a,'grouping':dbTableObj0b,'sortBy':'epochTime','sortBy1':'category'}
+dbTableObject0={'tag':0,'tableName':'guestbook','columns':dbTableObj0a,'grouping':dbTableObj0b,'sortBy':'epochTime','sortBy1':'category','sortBy1Order':'ASC','sortByOrder':'DESC'}
 
 dbTableObj1a=['row_id','publishStatusTag','dateAdded','category','displayOrder','file','title','link','skills','media','epochTime']
-dbTableObj1b={0:{'tag':0,'label':'Embedded Systems'},1:{'tag':1,'label':'Software Development'},2:{'tag':2,'label':'Hardware Development'}}
-dbTableObject1={'tag':1,'tableName':'projects','columns':dbTableObj1a,'grouping':dbTableObj1b,'sortBy':'category','sortBy1':'epochTime'}
+dbTableObj1b={0:{'tag':0,'label':'Introduction'},2:{'tag':2,'label':'Embedded Systems'},1:{'tag':1,'label':'Software Development'},3:{'tag':3,'label':'Hardware Development'}}
+dbTableObject1={'tag':1,'tableName':'projects','columns':dbTableObj1a,'grouping':dbTableObj1b,'sortBy':'category','sortBy1':'displayOrder','sortBy1Order':'ASC','sortByOrder':'ASC'}
 
 dbTableObj2a=['row_id','publishStatusTag','dateAdded','category','displayOrder','file','title','duration','position','link','media','epochTime']
-dbTableObj2b={0:{'tag':0,'label':'Primary/Secondary Education'},1:{'tag':1,'label':'Tertiary Education'},2:{'tag':2,'label':'Professional Experience'}}
-dbTableObject2={'tag':2,'tableName':'about','columns':dbTableObj2a,'grouping':dbTableObj2b,'sortBy':'category','sortBy1':'epochTime'}
+dbTableObj2b={0:{'tag':0,'label':'Introduction'},3:{'tag':3,'label':'Primary/Secondary Education'},2:{'tag':2,'label':'Tertiary Education'},1:{'tag':1,'label':'Professional Experience'}}
+dbTableObject2={'tag':2,'tableName':'about','columns':dbTableObj2a,'grouping':dbTableObj2b,'sortBy':'category','sortBy1':'displayOrder','sortBy1Order':'ASC','sortByOrder':'ASC'}
 
 dbTableArray=[dbTableObject0,dbTableObject1,dbTableObject2]
 
@@ -76,22 +76,22 @@ arrayRenderType=[inputTypeTag0,inputTypeTag1,inputTypeTag2,inputTypeTag3,inputTy
 def hello_world(page=None,subpage=None):
 
     panel0=panel1=''
+    twoColumns=True
 
     if (page==None):
         page='landing'
         contentObj=landing()
     elif (page=='about'):
         if subpage==None:
-            contentObj=about()
-        else:
-            contentObj=about(subpage)
+            subpage=9
+        contentObj=about(subpage)
     elif (page=='projects'):
         if subpage==None:
-            contentObj=projects()
-        else:
-            contentObj=projects(subpage)
+            subpage=8
+        contentObj=projects(subpage)
     elif (page=='reviewEntry'):
         contentObj=reviewEntry()
+        twoColumns=False
     elif (page=='editDatabase'):
         contentObj=landing(editDatabase())
     elif (page=='home'):
@@ -104,7 +104,11 @@ def hello_world(page=None,subpage=None):
     pageName=contentObj['pageName']
     panelHeader=header(page)
     panelFooter=footer()
-    page=renderHtml('page').format(wrapper=page,pageName=pageName,header=panelHeader,panel0=panel0,panel1=panel1,footer=panelFooter)
+    if twoColumns:
+        temp=renderHtml('pageTwoColumns').format(panel0=panel0,panel1=panel1)
+    else:
+        temp=renderHtml('pageOneColumn').format(panel0=panel0)
+    page=renderHtml('page').format(wrapper=page,pageName=pageName,header=panelHeader,content=temp,footer=panelFooter)
     return page
 
 # function type: render object
@@ -161,10 +165,10 @@ def about(subpage=None):
 
     try:
         if subpage:
-            panel1=listEntries('about',0,1,subpage)
+            panel0=listEntries('about',0,1,subpage)
         else:
-            panel1=renderHtml('about',folder)
-        panel0=listEntries('about',0,0,subpage)
+            panel0=renderHtml('about',folder)
+        panel1=renderHtml('sidebar',folder).format(listEntries('about',0,0,subpage))
         errorCode=False
     except Exception as e:
         errorMessage=str(e)
@@ -180,10 +184,10 @@ def projects(subpage=None):
     panel0=panel1=''
     try:
         if subpage:
-            panel1=listEntries('projects',0,1,subpage)
+            panel0=listEntries('projects',0,1,subpage)
         else:
-            panel1=renderHtml('projects',folder)
-        panel0=listEntries('projects',0,0,subpage)
+            panel0=renderHtml('projects',folder)
+        panel1=renderHtml('sidebar',folder).format(listEntries('projects',0,0,subpage))
     except Exception as e:
         #errorMessage=str(e)
         panel0='fail -'+str(e)
@@ -225,7 +229,10 @@ def convertArrayToObject(obj,table):
 
 # function type: operational
 def listEntries(table,sortBy=0,mode=0,subpage=None):
-    #mode 0 = panel 0, mode 1 = panel 1
+    '''
+    mode=0 panel 0 (render both sidebar and content columns)
+    mode=1 panel 1 (render only sidebar)
+    '''
     folder=table
     dbObj=initDatabase()
     db1=dbObj['cursor']
@@ -239,8 +246,10 @@ def listEntries(table,sortBy=0,mode=0,subpage=None):
             grouping=dbTableObject['grouping']
             sortBy=dbTableObject['sortBy']
             sortBy1=dbTableObject['sortBy1']
+            sortByOrder=dbTableObject['sortByOrder']
+            sortBy1Order=dbTableObject['sortBy1Order']
 
-    db1.execute('SELECT * FROM {} ORDER BY {} DESC, {} DESC LIMIT 0, 49999;'.format(tableName,sortBy,sortBy1))
+    db1.execute('SELECT * FROM {} ORDER BY {} {}, {} {} LIMIT 0, 49999;'.format(tableName,sortBy,sortByOrder,sortBy1,sortBy1Order))
     ll=db1.fetchall()
 
     try:
@@ -269,7 +278,7 @@ def listEntries(table,sortBy=0,mode=0,subpage=None):
                         content+=renderHtml('sidebarObject',folder).format(str(obj['row_id']),obj['title'])
                 else:
                     if str(subpage)==str(row_id):
-                        content+=renderHtml('contentObject',folder).format(obj['duration'],obj['position'],renderHtml('content',folder+'/'+obj['file']))
+                        content+=renderHtml('contentObject',folder).format(renderHtml('content',folder+'/'+obj['file']))
             else: #projects
                 if mode==0:
                     if temp!=category:
@@ -302,7 +311,8 @@ def reviewEntry():
         sender=request.form['name']
         message=request.form['message']
         category=int(request.form['category'])
-        symbol=dbTableObj0b[category]
+        temp=dbTableObj0b[category]
+        symbol=temp['symbol']
         displayDateAdded=datetime.today().strftime('%Y%m%d')
         content+=renderHtml('reviewEntry',folder).format(symbol=symbol,sender=sender,displayDateAdded=displayDateAdded,message=message,publishStatusTag=1,dateAdded=displayDateAdded,category=category,others=None)
         errorCode=False
