@@ -72,27 +72,27 @@ h2 {
 }
 
 h3 {
-    color: var(--colourh1);
+    color: var(--colourh3);
     font-family: 'Raleway'
 }
 
 h4 {
-    color: var(--colourh2);
-    font-family: 'Raleway';
-}
-
-h5 {
     color: var(--colourh1);
     font-family: 'Raleway';
 }
 
-h6 {
+h5 {
     color: var(--colourh2);
     font-family: 'Raleway';
 }
 
-h7 {
+h6 {
     color: var(--colourh3);
+    font-family: 'Raleway';
+}
+
+h7 {
+    color: var(--colourh1);
     font-family: 'Raleway';
     display: block;
 }

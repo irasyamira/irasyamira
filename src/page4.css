@@ -72,27 +72,27 @@ h2 {
 }
 
 h3 {
-    color: var(--colourh1);
+    color: var(--colourh3);
     font-family: 'Raleway'
 }
 
 h4 {
-    color: var(--colourh2);
-    font-family: 'Raleway';
-}
-
-h5 {
     color: var(--colourh1);
     font-family: 'Raleway';
 }
 
-h6 {
+h5 {
     color: var(--colourh2);
     font-family: 'Raleway';
 }
 
-h7 {
+h6 {
     color: var(--colourh3);
+    font-family: 'Raleway';
+}
+
+h7 {
+    color: var(--colourh1);
     font-family: 'Raleway';
     display: block;
 }
@@ -332,20 +332,42 @@ div#guestbook > img, div#guestbook > p {
 }
 
 /*================================================================*/
-/* TIMELINE */
+/* SIDENAV */
 /*================================================================*/
 
+nav {
+    border-left: 3px solid var(--colour3);
+    padding: 0 3%;
+}
+
+nav select {
+    display: none;
+}
+
+@media (max-width: 960px) {
+    nav {
+        border-left: 0px solid var(--colour3);
+        padding: 0;
+    }
+    nav ul     {
+        display: none;
+
+    }
+    nav select {
+        display: inline-block;
+    }
+}
 
 /*================================================================*/
 /* ABOUT */
 /*================================================================*/
 
 div#about .sidebar {
-    width: 70%;
+    width: 65%;
 }
 
 div#about .content {
-    width: 30%;
+    width: 35%;
 }
 
 div#about a:hover {
@@ -363,6 +385,9 @@ div#about img {
 
     div#about .sidebar {
         width: 100%;
+    }
+    div#about img {
+        padding: 1% 0;
     }
 }
 

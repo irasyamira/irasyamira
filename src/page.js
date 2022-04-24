@@ -32,5 +32,4 @@ function myFunction(success) {
     else {
         alert("Entry was unsuccessful :c");
     }
-
 }

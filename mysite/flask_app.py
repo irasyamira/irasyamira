@@ -33,7 +33,7 @@ dbTableObj0b={0:{'label':'family','symbol':'👪'},1:{'label':'primary school','
 dbTableObject0={'tag':0,'tableName':'guestbook','columns':dbTableObj0a,'grouping':dbTableObj0b,'sortBy':'epochTime','sortBy1':'category','sortBy1Order':'ASC','sortByOrder':'DESC'}
 
 dbTableObj1a=['row_id','publishStatusTag','dateAdded','category','displayOrder','file','title','link','skills','media','epochTime']
-dbTableObj1b={0:{'tag':0,'label':'Introduction'},2:{'tag':2,'label':'Embedded Systems'},1:{'tag':1,'label':'Software Development'},3:{'tag':3,'label':'Hardware Development'}}
+dbTableObj1b={0:{'tag':0,'label':'Introduction'},2:{'tag':2,'label':'Embedded Systems'},1:{'tag':1,'label':'Software Development'},3:{'tag':3,'label':'Hardware Programming'}}
 dbTableObject1={'tag':1,'tableName':'projects','columns':dbTableObj1a,'grouping':dbTableObj1b,'sortBy':'category','sortBy1':'displayOrder','sortBy1Order':'ASC','sortByOrder':'ASC'}
 
 dbTableObj2a=['row_id','publishStatusTag','dateAdded','category','displayOrder','file','title','duration','position','link','media','epochTime']
@@ -168,7 +168,7 @@ def about(subpage=None):
             panel0=listEntries('about',0,1,subpage)
         else:
             panel0=renderHtml('about',folder)
-        panel1=renderHtml('sidebar',folder).format(listEntries('about',0,0,subpage))
+        panel1=listEntries('about',0,0,subpage)
         errorCode=False
     except Exception as e:
         errorMessage=str(e)
@@ -187,7 +187,7 @@ def projects(subpage=None):
             panel0=listEntries('projects',0,1,subpage)
         else:
             panel0=renderHtml('projects',folder)
-        panel1=renderHtml('sidebar',folder).format(listEntries('projects',0,0,subpage))
+        panel1=listEntries('projects',0,0,subpage)
     except Exception as e:
         #errorMessage=str(e)
         panel0='fail -'+str(e)
@@ -236,7 +236,7 @@ def listEntries(table,sortBy=0,mode=0,subpage=None):
     folder=table
     dbObj=initDatabase()
     db1=dbObj['cursor']
-    content=temp=''
+    content=contentMobile=temp=''
     obj={}
 
     #get dbTableObject based on tableName
@@ -249,7 +249,7 @@ def listEntries(table,sortBy=0,mode=0,subpage=None):
             sortByOrder=dbTableObject['sortByOrder']
             sortBy1Order=dbTableObject['sortBy1Order']
 
-    db1.execute('SELECT * FROM {} ORDER BY {} {}, {} {} LIMIT 0, 49999;'.format(tableName,sortBy,sortByOrder,sortBy1,sortBy1Order))
+    db1.execute('SELECT * FROM {} WHERE publishStatusTag = {} ORDER BY {} {}, {} {} LIMIT 0, 49999;'.format(tableName,1,sortBy,sortByOrder,sortBy1,sortBy1Order))
     ll=db1.fetchall()
 
     try:
@@ -271,23 +271,29 @@ def listEntries(table,sortBy=0,mode=0,subpage=None):
                 if mode==0:
                     if temp!=category:
                         temp=category
-                        content+=renderHtml('sidebarHeadingObject',folder).format(temp1)
+                        content+=renderHtml('sidebarHeadingObject','sidenav').format(temp1)
+                        contentMobile+=renderHtml('sidebarHeadingObjectMobile','sidenav').format(temp1)
                     if str(subpage)==str(row_id):
-                        content+=renderHtml('sidebarObjectActive',folder).format(str(obj['row_id']),obj['title'])
+                        content+=renderHtml('sidebarObjectActive','sidenav').format(str(obj['row_id']),obj['title'])
+                        contentMobile+=renderHtml('sidebarObjectActiveMobile','sidenav').format(str(obj['row_id']),obj['title'])
                     else:
-                        content+=renderHtml('sidebarObject',folder).format(str(obj['row_id']),obj['title'])
+                        content+=renderHtml('sidebarObject','sidenav').format(str(obj['row_id']),obj['title'])
+                        contentMobile+=renderHtml('sidebarObjectMobile','sidenav').format(str(obj['row_id']),obj['title'])
                 else:
                     if str(subpage)==str(row_id):
-                        content+=renderHtml('contentObject',folder).format(renderHtml('content',folder+'/'+obj['file']))
+                        content+=renderHtml('contentObject',folder).format(obj['title'],renderHtml('content',folder+'/'+obj['file']))
             else: #projects
                 if mode==0:
                     if temp!=category:
                         temp=category
-                        content+=renderHtml('sidebarHeadingObject',folder).format(temp1)
+                        content+=renderHtml('sidebarHeadingObject','sidenav').format(temp1)
+                        contentMobile+=renderHtml('sidebarHeadingObjectMobile','sidenav').format(temp1)
                     if str(subpage)==str(row_id):
-                        content+=renderHtml('sidebarObjectActive',folder).format(str(obj['row_id']),obj['title'])
+                        content+=renderHtml('sidebarObjectActive','sidenav').format(str(obj['row_id']),obj['title'])
+                        contentMobile+=renderHtml('sidebarObjectActiveMobile','sidenav').format(str(obj['row_id']),obj['title'])
                     else:
-                        content+=renderHtml('sidebarObject',folder).format(str(obj['row_id']),obj['title'])
+                        content+=renderHtml('sidebarObject','sidenav').format(str(obj['row_id']),obj['title'])
+                        contentMobile+=renderHtml('sidebarObjectMobile','sidenav').format(str(obj['row_id']),obj['title'])
                 else:
                     if str(subpage)==str(row_id):
                         content+=renderHtml('contentObject',folder).format(obj['title'],renderHtml('content',folder+'/'+obj['file']))
@@ -295,7 +301,10 @@ def listEntries(table,sortBy=0,mode=0,subpage=None):
         errorMessage=e
         content+=str(errorMessage)
 
-    output=content
+    if mode==0 and table!='guestbook':
+        output=renderHtml('sidebar','sidenav').format(content,contentMobile)
+    else:
+        output=content
     return output
 
 # function type: operational
