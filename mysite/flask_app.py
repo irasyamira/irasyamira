@@ -173,7 +173,7 @@ def about(subpage=None):
     except Exception as e:
         errorMessage=str(e)
 
-    return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+    return {'panel0':panel1,'panel1':panel0,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 
 # function type: render page
 def projects(subpage=None):
@@ -191,7 +191,7 @@ def projects(subpage=None):
     except Exception as e:
         #errorMessage=str(e)
         panel0='fail -'+str(e)
-    return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+    return {'panel0':panel1,'panel1':panel0,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
 
 # function type: render object
 def guestbook(alert=None):

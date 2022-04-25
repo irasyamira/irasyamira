@@ -46,7 +46,7 @@ hr {
 }
 
 img {
-    border-radius: 0.3em;
+    border-radius: 0;
     filter: drop-shadow(5px 5px 5px var(--colour3)) contrast(0.8) saturate(1);
     width: 100%;
 }
@@ -132,6 +132,19 @@ button {
     box-sizing: border-box;
 }
 
+meter {
+    width: 100%;
+}
+
+div {
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+div#contentObject .column {
+    padding-right: 2%;
+}
+
 /*================================================================*/
 /* LINKS */
 /*================================================================*/
@@ -170,6 +183,13 @@ a:active {
     padding-left: 1%;
 }
 
+div#contentObject {
+    border-left: 3px solid var(--colour3);
+    padding-left: 3%;
+    padding-bottom: 3%;
+    padding-top: 2%;
+}
+
 div#oneColumn {
     width: 100%;
     padding-top: 1%;
@@ -203,7 +223,19 @@ div#oneColumn {
         width: 100%;
     }
     .sidebar {
-        padding: 1% 2%;
+        padding-right: 2%;
+        padding-left: 2%;
+        padding-bottom: 2%;
+        width: 100%;
+    }
+    div#contentObject {
+        border-top: 3px solid var(--colour3);
+        border-left: 0;
+        padding-left: 0;
+        padding-bottom: 0;
+        padding-top: 2%;
+    }
+    .column {
         width: 100%;
     }
 }
@@ -332,20 +364,44 @@ div#guestbook > img, div#guestbook > p {
 }
 
 /*================================================================*/
-/* TIMELINE */
+/* SIDENAV */
 /*================================================================*/
 
+nav {
+    padding: 0;
+}
+
+nav select {
+    display: none;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0 0;
+}
+
+@media (max-width: 960px) {
+    nav {
+        padding-bottom: 1%;
+    }
+    nav ul     {
+        display: none;
+    }
+    nav select {
+        display: inline-block;
+    }
+}
 
 /*================================================================*/
 /* ABOUT */
 /*================================================================*/
 
 div#about .sidebar {
-    width: 70%;
+    width: 30%;
 }
 
 div#about .content {
-    width: 30%;
+    width: 70%;
 }
 
 div#about a:hover {
@@ -353,7 +409,10 @@ div#about a:hover {
 }
 
 div#about img {
-    padding: 1% 20%;
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-bottom: 2%;
+    padding-top: 1%;
 }
 
 @media screen and (max-width: 960px) {
@@ -374,15 +433,22 @@ div#about img {
 /*================================================================*/
 
 div#projects .sidebar {
-    width: 70%;
+    width: 30%;
 }
 
 div#projects .content {
-    width: 30%;
+    width: 70%;
 }
 
 div#projects a:hover {
     color: var(--colour2);
+}
+
+div#projects img {
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-bottom: 2%;
+    padding-top: 1%;
 }
 
 @media screen and (max-width: 960px) {
@@ -393,4 +459,5 @@ div#projects a:hover {
     div#projects .sidebar {
         width: 100%;
     }
+
 }
