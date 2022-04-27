@@ -43,6 +43,8 @@ footer {
 
 hr {
     border: 1px solid var(--colour2);
+    width: 100%;
+    padding: 0 60%;
 }
 
 img {
@@ -194,6 +196,8 @@ div#oneColumn {
     width: 100%;
     padding-top: 1%;
     padding-left: 5%;
+    color: pink;
+    background-color: yellow;
 }
 
 .sidebar {
@@ -314,6 +318,15 @@ div#landing .content {
 }
 
 /*================================================================*/
+/* REVIEW ENTRY */
+/*================================================================*/
+
+div#reviewEntry .row {
+	width: 20%;
+	color: pink;
+}
+
+/*================================================================*/
 /* GUESTBOOK */
 /*================================================================*/
 
@@ -334,10 +347,6 @@ div#guestbook .scrollable {
 
 div#guestbook .column {
     padding-right: 1%;
-}
-
-div#reviewEntry {
-	width: 100%;
 }
 
 div#guestbook textarea {

@@ -15,8 +15,13 @@
     --colour5: rgba(0, 0, 0,0.15);
     --colour5: #666666;
     /*headings*/
+    /*
+    h1 - orange
+    h2 - pink (colour2)
+    h3 - pink
+    */
     --colourh1: #FBC6A4;
-    --colourh2: #AFB9C8;
+    --colourh2: #F4A9A8;
     --colourh3: #F56D91;
     --fontDefSize: 0.82em;
 }
@@ -42,7 +47,7 @@ footer {
 }
 
 hr {
-    border: 1px solid var(--colour2);
+    border: 1px solid var(--colour3);
 }
 
 img {
@@ -190,10 +195,13 @@ div#contentObject {
     padding-top: 2%;
 }
 
-div#oneColumn {
+div#oneColumn .content {
     width: 100%;
-    padding-top: 1%;
-    padding-left: 5%;
+    float: left;
+    padding-top: 2%;
+    padding-right: 35%;
+    padding-left: 35%;
+    background-color: transparent;
 }
 
 .sidebar {
@@ -225,7 +233,6 @@ div#oneColumn {
     .sidebar {
         padding-right: 2%;
         padding-left: 2%;
-        padding-bottom: 2%;
         width: 100%;
     }
     div#contentObject {
@@ -237,6 +244,11 @@ div#oneColumn {
     }
     .column {
         width: 100%;
+    }
+    div#oneColumn .content {
+        width: 100%;
+        padding-right: 5%;
+        padding-left: 5%;
     }
 }
 
@@ -314,6 +326,15 @@ div#landing .content {
 }
 
 /*================================================================*/
+/* REVIEW ENTRY */
+/*================================================================*/
+
+div#reviewEntry .row {
+	width: 20%;
+	color: pink;
+}
+
+/*================================================================*/
 /* GUESTBOOK */
 /*================================================================*/
 
@@ -334,10 +355,6 @@ div#guestbook .scrollable {
 
 div#guestbook .column {
     padding-right: 1%;
-}
-
-div#reviewEntry {
-	width: 100%;
 }
 
 div#guestbook textarea {
