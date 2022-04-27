@@ -132,10 +132,19 @@ button {
     box-sizing: border-box;
 }
 
+meter {
+    width: 100%;
+}
+
 div {
     text-align: justify;
     text-justify: inter-word;
 }
+
+div#contentObject .column {
+    padding-right: 2%;
+}
+
 /*================================================================*/
 /* LINKS */
 /*================================================================*/
@@ -174,6 +183,13 @@ a:active {
     padding-left: 1%;
 }
 
+div#contentObject {
+    border-left: 3px solid var(--colour3);
+    padding-left: 3%;
+    padding-bottom: 3%;
+    padding-top: 2%;
+}
+
 div#oneColumn {
     width: 100%;
     padding-top: 1%;
@@ -207,7 +223,19 @@ div#oneColumn {
         width: 100%;
     }
     .sidebar {
-        padding: 1% 2%;
+        padding-right: 2%;
+        padding-left: 2%;
+        padding-bottom: 2%;
+        width: 100%;
+    }
+    div#contentObject {
+        border-top: 3px solid var(--colour3);
+        border-left: 0;
+        padding-left: 0;
+        padding-bottom: 0;
+        padding-top: 2%;
+    }
+    .column {
         width: 100%;
     }
 }
@@ -308,8 +336,8 @@ div#guestbook .column {
     padding-right: 1%;
 }
 
-.reviewEntry {
-    padding: 10% 30%;
+div#reviewEntry {
+	width: 100%;
 }
 
 div#guestbook textarea {
@@ -340,8 +368,7 @@ div#guestbook > img, div#guestbook > p {
 /*================================================================*/
 
 nav {
-    border-left: 3px solid var(--colour3);
-    padding-left: 5%;
+    padding: 0;
 }
 
 nav select {
@@ -353,18 +380,12 @@ nav ul {
     padding: 0 0;
 }
 
-nav {
-    text-align: none;
-}
-
 @media (max-width: 960px) {
     nav {
-        border-left: 0px solid var(--colour3);
-        padding: 0;
+        padding-bottom: 1%;
     }
     nav ul     {
         display: none;
-
     }
     nav select {
         display: inline-block;
@@ -376,11 +397,11 @@ nav {
 /*================================================================*/
 
 div#about .sidebar {
-    width: 35%;
+    width: 30%;
 }
 
 div#about .content {
-    width: 65%;
+    width: 70%;
 }
 
 div#about a:hover {
@@ -412,11 +433,11 @@ div#about img {
 /*================================================================*/
 
 div#projects .sidebar {
-    width: 35%;
+    width: 30%;
 }
 
 div#projects .content {
-    width: 65%;
+    width: 70%;
 }
 
 div#projects a:hover {
@@ -438,4 +459,5 @@ div#projects img {
     div#projects .sidebar {
         width: 100%;
     }
+
 }
