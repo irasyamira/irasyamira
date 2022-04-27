@@ -336,8 +336,8 @@ div#guestbook .column {
     padding-right: 1%;
 }
 
-.reviewEntry {
-    padding: 10% 30%;
+div#reviewEntry {
+	width: 100%;
 }
 
 div#guestbook textarea {
