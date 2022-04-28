@@ -2,4 +2,31 @@ An automated clothing search tool. Provides user with visually similar (color, c
 <br>
 <br>
 The Smartfashion mobile application automates the search of visually similar clothing items
-using image processing and machine learning.Smartfashion 2.0 continues the success of the initialimplementation of Smartfashion [1] with the addition ofa new feature – fabric detection. This report discusses theimplementation of Smartfashion 2.0 in depth, includingthe motivation behind the need to incorporate fabricdetection into the existing system as well as the resultsobtained from the addition of this feature. Existingmobile applications that also performs automatedclothing search has been compared against the featuresof Smartfashion 2.0. Through this comparison, it hasbeen discovered that none of the existing products hasimplemented both fabric and clothing type detectiontogether due to the contrasting need for a zoomed-ininput image to perform fabric detection and a zoomed-out input image for clothing type detection. Machinelearning models taken into consideration have beenquantitatively analysed before one was selected for theimplementation. The Support Vector Machine (SVM)learning model was selected to perform both clothing-type and fabric detection due to its relatively highaccuracy when split-testing was carried out. After theimplementation has been completed, results from testinghas concluded that both fabric and clothing-typedetection can be performed using the same zoomed-outinput image. The accuracy of this implementation hasbeen quantitatively analysed – both fabric and clothing-type detection resulted in an accuracy of 57.5%.Conclusions derived from the project along with possibleimprovements and refinement are also discussed brieflyin this documentation.
+using image processing and machine learning.Smartfashion 2.0 continues the success of the initialimplementation of Smartfashion [1] with the addition ofa new feature – fabric detection.
+This report discusses theimplementation of Smartfashion 2.0 in depth, includingthe motivation behind the need to incorporate fabricdetection into the existing system as well as the resultsobtained from the addition of this feature.
+Existingmobile applications that also performs automatedclothing search has been compared against the featuresof Smartfashion 2.0. Through this comparison, it hasbeen discovered that none of the existing products hasimplementedm both fabric and clothing type detectiontogether due to the contrasting need for a zooed-ininput image to perform fabric detection and a zoomed-out input image for clothing type detection. Machinelearning models taken into consideration have beenquantitatively analysed before one was selected for theimplementation. The Support Vector Machine (SVM)learning model was selected to perform both clothing-type and fabric detection due to its relatively highaccuracy when split-testing was carried out. After theimplementation has been completed, results from testinghas concluded that both fabric and clothing-typedetection can be performed using the same zoomed-outinput image. The accuracy of this implementation hasbeen quantitatively analysed – both fabric and clothing-type detection resulted in an accuracy of 57.5%.
+Conclusions derived from the project along with possibleimprovements and refinement are also discussed brieflyin this documentation.
+<br>
+<br>
+The Smartfashion mobile application has successfully automated the process of visually similar clothes
+on Amazon using image processing and machine learning. The addition of the new fabric detection feature to the mobile
+application has narrowed down search results to only the fabric type specified. As a whole, Smartfashion achieves an
+accuracy of 57.5% in detecting leather when tested with images containing all kinds of fabric. As the machine learning
+model used were trained to only detect leather and wool, testing was extended to only the identification of either leather
+or wool. This is to qualitatively measure the feasibility of a continued work on Smartfashion based on the accuracy of
+the learning model for fabric identification alone. The extended testing resulted in an accuracy of 63.4%. Therefore,
+future work in adding more fabric types is promising based on the extended testing of leather and wool identification.
+
+1. Introduction
+
+The completion of Smartfashion 2.0 has proven that the execution of both fabric and clothing-type detection using a
+single image is possible. Through detailed testing, several issues impacting the final accuracy of the search results were
+identified and addressed in the main documentation. This includes the use of lower quality images (i.e. compressed
+images, images with smaller dimensions), lighting condition in the photos taken as well as training images under ideal
+conditions (i.e. good contrast, high quality, good lighting) used for the SVM feature generation. As the focus of
+Smartfashion 2.0 was fabric detection, testing has been extended to only using dataset containing leather and wool
+images. This is to measure the performance of the new feature, as well as measuring the potential of success in future
+work relating to the expansion of fabric types able to be identified by the mobile application through machine learning.
+The following section, Section 2.0, will present in-depth analysis on the results from the extended testing which includes
+the confusion matrices as well as precision, recall a and F1 score values calculated from the matrices. Possible
+improvements, refinement and future work to the Smartfashion

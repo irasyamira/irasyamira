@@ -204,6 +204,10 @@ div#oneColumn .content {
     background-color: transparent;
 }
 
+nav h2 {
+    display: inline;
+}
+
 .sidebar {
     width: 50%;
     float: left;

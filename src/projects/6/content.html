@@ -1,1 +1,64 @@
 A peer-to-peer (p2p) messaging web application using CherryPy framework running on Python. Allows users within the same LAN to send messages and files to each other through the implemented networking protocol.
+<br>
+<br>
+System Requirements
+
+The system has been developed to allow user to log in and interact with other online users. Users may view the list of currently online users, create a profile for themselves and being able to share files of any format with other users in the system.
+
+Top-level view of system
+
+
+Diagram 1: Top level view of the system
+
+The above diagram briefly illustrates the user-interface and how the main APIs were implemented into the system. The system is kept simple as to encourage intuitive usage of the application as well as focusing on the main requirements of the system.
+
+Two databases were used in the system. Database 1 keeps track of online users which changes constantly and every time the list of online users is being updated, the existing table is dropped and recreated to ensure there are no duplicate users. Therefore, to ensure no data is lost in any event of table drop, a second database is created to retain messaging history and user profiles.
+
+
+
+Issues during development
+
+As the development of this application requires the merging of multiple programming languages, the main issue has to be understanding the dependency between the languages and how they relate to each other. The lack of experience and familiarity in the languages were a big challenge to implement even the simplest functionality. However, the abundant resources online were very useful in overcoming the issue. Reading through a number of websites explaining how certain modules in python operates has helped so much in understanding how the language works and also in implementing the bulk of the system. The relation between python and HTML was also a significant issue in the development of the system. The example given in class were a great help in kick-starting the project which also helped significantly in gaining understanding how these two languages coexist in the same application.
+
+Apart from that, understanding networking and how protocols operate was also a significant challenge in the completion of this project.  It was a challenge to begin understanding networking until it is actually being implemented. Even then, it was easy to misunderstand the concept as not everything is being explored throughout the system development. This issue was overcame by trial and error of APIs related to other nodes. Constant testing of APIs with other people was the biggest help in resolving the issue with understanding networking.
+
+Extra features
+
+On top of messaging peers, the system allows substring searching within message history which is made possible by the use of a database. Message search results are returned according to date.
+
+Users are also able to monitor incoming messages from different users easily as received messages are shown within the same page.
+
+The /interact page supports media viewing (jpeg, png, gif, mp3, wav, mp4) which makes it easier for user to view received files of these types without having to download them. A download option is also available if the user wishes to download the files received, regardless of the file format.
+
+Pages within the application also reloads and a reminder of the auto reload frequency is included in every page as different pages auto reloads at a different frequency. This is to constantly check for new messages and update the list of online users. The auto reload reminder is place right below the real time digital clock at the top of the page to ease tracking by user. Auto reloads also ensure the user is automatically logged out if they are inactive for five minutes, ensuring security if they are away from their device.
+The simple user-interface is viewable in all browsers and also in mobile devices without having to reload a mobile version. The minimal layout ensure shorter loading time.
+Online users are listed in the /interact page which makes it easy for current user to monitor other online users before sending them a message or a file.
+
+Peer-to-peer methods and their suitability for this application
+
+The use of peer-to-peer methods for this application is a relatively risky choice for this application since it has very low security. However, the encouragement to use higher level encryption  is a way to balance the security issue in the use of peer-to-peer methods. Since the application will be used within a closed group with a limited number of users, it can be said that it does not face too high of a risk.
+
+The protocol and its suitability for the system
+
+The use of login server suits the requirement of the client as the application will be used within a closed group of people and requires high security. A login server best fits the two main category as compared to a central server which has relatively minimal security, and a p2p network which supports very little number of clients before requiring maintenance and suffer from management problem.
+The only possible risk of the chosen protocol is the increased cost of the network if the number of clients ever grow significantly.
+
+The process of developing the protocol and its suitability
+
+The development of the protocol which were made in smaller groups was a great way to understand the basics of protocols as discussions were held among members. The varying opinions of group members helped widen perspectives on the chosen protocol.
+The in-lab discussions on protocols among other groups were a great tool in exchanging ideas on which protocol would perform better in the given scenario by the client rather than just justifying why our own chosen protocol would be the best.
+
+
+
+Suitability of the suggested tools (e.g. Python) for the application
+
+The tools suggested for the system development is highly suitable as it is widely used in web development which increases the availability of resources for students and learners of python.
+Apart from that, its’ efficient integration with databases enables it to perform well in application development requiring an extensive usage of database.
+
+The use of mysql and its browser in this system alongside makes tracking and updating the database much easier. In an event of an error related to the database and its accessibility, it is made easy to visually keep track of changes in the database that may have contributed to the error. (i.e deletion of row, table drop)
+
+The use of version control in this project is also one of the most effective tools in ensuring the completion of the project. Since databases can span up to large file sizes, the use of BitBucket automatically backs up these large databases in case of a mishandling of files which usually happen in the traditional way of backing up data.
+
+Improvements for future development
+
+In the future, it is hoped that a similar project may be executed again as I have picked up so much from this relatively short project. A lot of the technical terms now makes sense and are no longer jargons to me. If given more time and another opportunity, I would learn more on how to maximise security in networking as well as creating a high performing application that is fail-proof. It is also hoped that in the near future, I would be able to create an application that has way more functionalities while keeping it user-friendly and intuitive. By gaining more similar experiences, I hope to grasp the idea of secure and efficient networking and putting it to good use in real life problems.
