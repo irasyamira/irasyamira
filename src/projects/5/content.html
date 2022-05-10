@@ -1,9 +1,18 @@
-A smart traffic violation detection system that detects whether a vehicle is present within the yellow box of an intersection and then determines the type of violation using a trained Convolutional Neural Network (CNN). Implemented using an UP2 board and an Intel Movidius stick.
-<br>
-<br>
-Executive Summary
-Worsening of traffic congestion is arguably inevitable due to the increased number of private vehicles on the road. With the exponential growth in Artificial Intelligence development, it is intuitive that this area of knowledge can be integrated into already existing infrastructures, rather than replacing them, to help create a future-proof, yet low-cost solution to combat this problem. Consecutive intersections governed by traffic lights often causes congestion. As violations at critical sections (yellow box) of an intersection goes unnoticed due to the lack of surveillance, obstruction occurs within the critical section, dampening the already crawling traffic. This proposal puts forward the idea of automating the surveillance and reporting of violations within critical sections using the combination of computer vision, image processing, and machine learning. The implementation comprises of a processor (CPU/GPU) on a personal computer to perform machine learning model training, and an UP2 Board to perform live video processing and violation detection. The final system will only consist of the UP2 Board attached to a camera, that is to be integrated with existing traffic lights, making it an effective solution in terms of cost, safety, ease of installation, and being future-proof.
-<br>
-<br>
-Project Background
-The increasing number of private vehicles on the road nowadays directly impacts the time spent in traffic congestion when commuting. There are numerous of obvious solutions that can help mitigate traffic congestion such as increasing number of lanes, building overpass roads and directly decreasing number of private vehicles on the road by providing better public transportation. However, these solutions requires a long time to execute and take effect, as well as requiring a large amount of financial investment. Therefore, a proposal to make use of the already existing infrastructures to their absolute potential is put forward in hopes to significantly reduce traffic congestion. As a lot of traffic congestions occur due to the successive number of intersections controlled by traffic lights, the best possible way to tackle this issue is to smoothen traffic flow at every intersection, specifically at busier ones.
+<div class="w3-content w3-display-container" id="imageSlider">
+    <img class="mySlides" src="https://i.imgur.com/BmGzFuB.png">
+    <img class="mySlides" src="https://i.imgur.com/JWgrIGs.jpg">
+    <img class="mySlides" src="https://i.imgur.com/Ad6rjAn.png">
+    <div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle" style="width:100%">
+        <div class="w3-left w3-hover-text-khaki" onclick="plusDivs(-1)">&#10094;</div>
+        <div class="w3-right w3-hover-text-khaki" onclick="plusDivs(1)">&#10095;</div>
+        <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(1)"></span>
+        <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(2)"></span>
+        <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(3)"></span>
+    </div>
+</div>
+
+The smart traffic violation detection system detects whether a vehicle is present within the yellow box of an intersection and then determines the type of violation using a trained Convolutional Neural Network (CNN). The system was implemented using an UP<small>2</small> board and an Intel Movidius stick.
+<h5>Project Background</h5>
+The increasing number of private vehicles on the road nowadays directly impacts the time spent in traffic congestion when commuting. There are numerous of obvious solutions that can help mitigate traffic congestion such as increasing number of lanes, building overpass roads and directly decreasing number of private vehicles on the road by providing better public transportation. However, these solutions requires a long time to execute and take effect, as well as requiring a large amount of financial investment.
+<br><br>
+Therefore, this system makes use of the already existing infrastructures to their absolute potential. As a lot of traffic congestions occur due to the successive number of intersections controlled by traffic lights, the best possible way to tackle this issue is to smoothen traffic flow at every intersection, specifically at busier ones.

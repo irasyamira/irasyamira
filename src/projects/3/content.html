@@ -1,19 +1,7 @@
 Speeds up processing by factor of three in comparison to CPU by using the NVIDIA GeForce GPU and OpenCL.
 <br>
 <br>
-OpenCL is an open and free standard for parallel programming of heterogeneous systems. It is able to
-run on various types of devices and vendors. Thus multiple devices on a system can be used to perform
-computations in parallel. On a regular PC, the compute devices can be the CPU, the integrated graphics
-card, and the dedicated graphics card.
-Compared to CPUs, GPUs are better at performing the same operation on different data in parallel.
-This type of parallelism is also called data parallelism. This is because GPUs are optimised to execute
-a large number of small calculations in parallel, whereas CPUs are optimised for general purpose
-processing. GPUs are used for tasks like image processing, which involves the repetitive computation
-and processing of pixels over the whole image; multiple GPU threads are used to process these pixels
-at the same.
-Finding statistical features of a dataset is a relatively trivial process when done sequentially. Using
-OpenCL to calculate statistical values in parallel means different approach needs to be taken.
-Algorithms should be able to take advantage of the parallel computation power of the GPU.
-In this project, OpenCL was used to analyse and calculate statistical features of large datasets in parallel.
-These include sum, mean, median, minimum, maximum, range, lower quartile, upper quartile,
-variance, and standard deviation.
+OpenCL is an open and free standard for parallel programming of heterogeneous systems. It is able to run on various types of devices and vendors. Thus multiple devices on a system can be used to perform computations in parallel. On a regular PC, the compute devices can be the CPU, the integrated graphics card, and the dedicated graphics card. Compared to CPUs, GPUs are better at performing the same operation on different data in parallel. This type of parallelism is also called data parallelism. This is because GPUs are optimised to execute a large number of small calculations in parallel, whereas CPUs are optimised for general purpose processing. GPUs are used for tasks like image processing, which involves the repetitive computation and processing of pixels over the whole image; multiple GPU threads are used to process these pixels at the same.
+<br>
+<br>
+Finding statistical features of a dataset is a relatively trivial process when done sequentially. Using OpenCL to calculate statistical values in parallel means different approach needs to be taken. Algorithms should be able to take advantage of the parallel computation power of the GPU. In this project, OpenCL was used to analyse and calculate statistical features of large datasets in parallel. These include sum, mean, median, minimum, maximum, range, lower quartile, upper quartile, variance, and standard deviation.

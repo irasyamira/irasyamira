@@ -56,6 +56,12 @@ img {
     width: 100%;
 }
 
+video {
+    border-radius: 0;
+    filter: drop-shadow(5px 5px 5px var(--colour3)) contrast(0.8) saturate(1);
+    width: 100%;
+}
+
 p {
     color: var(--colour1);
     word-wrap: break-word;

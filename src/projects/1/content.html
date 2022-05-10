@@ -1,26 +1,32 @@
-A robot powered by Cypress PSoC5 able to traverse a pre-defined maze using breadth-first search (BFS), depth-first search (DFS) and A-star algorithms. Decisions are made via input from light sensing circuits.
-<br>
-<br>
-Abstract
-The goal of this mini project was to design a simple game console with a built-in computer game using only digital logics and digital design. The game we designed follows a set of rules with a specific win condition. The game is programmed on a DE0 board with a number of man-machine interfaces that allow the game to be played. Once the project was coded, we carried out a timing analysis and resource usage analysis to determine the performance characteristics of our system. The game system is controlled by one Moore FSM. Through the process of designing this system we had to make a number of design decisions/ tradeoffs.
+<div class="w3-content w3-display-container" id="imageSlider">
+    <img class="mySlides" src="https://i.imgur.com/TrmsgHC.jpg">
+    <img class="mySlides" src="https://i.imgur.com/mcJSjTa.jpg">
+    <div class="w3-center w3-container w3-section w3-large w3-text-white w3-display-bottommiddle" style="width:100%">
+        <div class="w3-left w3-hover-text-khaki" onclick="plusDivs(-1)">&#10094;</div>
+        <div class="w3-right w3-hover-text-khaki" onclick="plusDivs(1)">&#10095;</div>
+        <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(1)"></span>
+        <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(2)"></span>
+    </div>
+</div>
 
-Introduction
-The mini-project system we made is a simple game console with a built-in tank shooter computer game made using only digital logic and digital design. The game is played using a PS/2 mouse, a VGA screen, pushbuttons and DIP switches. Through the VGA interface, the game is displayed on a computer monitor. The rules of the game are as follows. In each level the player has to destroy a certain number of tanks by firing bullets at them from their own player-controlled tank in a certain period of time. If one of the top tanks reaches the bottom of the screen or if the time runs out in a game level then the player loses.
-
+<h5>Introduction</h5>
+The mini-project system we made is a simple game console with a built-in tank shooter computer game made using only digital logic and digital design. The game is programmed on a DE0 board with a number of man-machine interfaces that allows the game to be played. Once the project was coded, timing analysis and resource usage analysis were carried to determine the performance characteristics of the system. The game system is controlled by one Moore FSM. 
+<br><br>
+The game is played using a PS/2 mouse, a VGA screen, pushbuttons and DIP switches. Through the VGA interface, the game is displayed on a computer monitor. The rules of the game are as follows - In each level the player has to destroy a certain number of tanks by firing bullets at them from their own player-controlled tank in a certain period of time. If one of the top tanks reaches the bottom of the screen or if the time runs out in a game level then the player loses.
+<br><br>
 Apart from the given components (functional blocks), we implemented other components such as our own timer for keeping track of the time left in each level, an LFSR for generating random respawn positions for the top tanks, a game_control block that contains the FSM that controls the system, a screen_text block that generates the text to be displayed on the screen and a 7-segment block for displaying the score. We also implemented collision detection, tank spawning and vertical and horizontal tank movement in our tank component.
-
-Game Strategy
+<h5>Game Strategy</h5>
 Features and rules of the game
 The game has a bottom player-controlled tank and up to 2 top computer-controlled tanks which are displayed as squares on the monitor. The top and bottom tanks are different colours. The bottom player controlled tank’s horizontal movement is controlled using the mouse and is able to shoot ‘round’ bullets when the mouse is clicked. The tank can only shoot one bullet at a time. The tank can only shoot the second bullet once the previous bullet goes out of the screen or hits an opponent’s tank. The top tanks will be continuously moving at a constant speed either horizontally or in a zig-zag motion. When a top tank is hit by a bullet, it disappears and respawns at a random position at the top of the screen, then the player’s score on the screen is increased by one. The score is also displayed on the seven segment displays on the console. When the game finishes, the reset button can be pressed to return to the main menu.
-
+<br><br>
 The game has 2 operation modes, a Practice mode and a single player Game mode. The game mode is determined by using a DIP switch on the console. In the Training mode, the player can practice at the lowest game level until the timer hits zero. While the Game mode has 4 timed levels with increasing difficulty. The game mode screen displays the score, level number, the number of tanks left to destroy in a level and the time left to complete a level. While the practice mode screen displays the score and time left.
-
+<br><br>
 The Game mode has 4 levels. In each level the player has to destroy a certain number of tanks (by firing bullets at them from their own tank) in a set amount of time to progress to the next level. If the player doesn’t destroy the required number of tanks in the given time then they lose and the game proceeds to the game over screen where their score is displayed. As the levels progress, the player will have less time to destroy all the tanks, the top tanks will move faster and the number of tanks needed to be destroyed each level will also increase. Each time the player destroys a tank in a level their score tally increases. In the first game mode level the player will have 55 seconds to complete the level, in the second they will have 50 seconds, in the third they will have 45 seconds and in the fourth they will have 40 seconds. In the first game mode level the player will have to destroy 3 tanks to proceed, in the second they will have to destroy 4 tanks, in the third level they will have to destroy 5 tanks and in the fourth level they will have to destroy 6 tanks. If the player finishes all 4 game mode levels they will win the game and proceed to the ‘game won’ screen where their final score will be displayed.
-
+<br><br>
 In the first level the top tank will move side to side horizontally and when it is destroyed, will respawn at the top in a random position. In the second level two top tanks will spawn and will move side to side horizontally and when they are destroyed, will respawn at the top in a random position. In the third level one top tank will spawn and move vertically downwards whilst also moving side to side horizontally (zig-zag motion). If the tank reaches the bottom of the screen without being hit by a bullet from the player’s tank then the player loses and the game proceeds to the ‘game over’ screen. In the fourth level two top tanks will spawn at once and move downwards in a zig-zag motion.
 
-Man-machine interfaces
+<h5>Man-machine interfaces</h5>
 The mini-project has a number of man-machine interfaces. The PS2 mouse is used to control the movement of the bottom tank and pressing its left click button will shoot a bullet. The 3 pushbuttons on the DE0 board are used to start, reset and pause the game. The mini-project makes use of one DIP switch (sw0) on the DE0 board to switch between game modes in the main menu. Through the Video Graphics Array (VGA) interface, the game is displayed on a computer monitor.
 
-How to play the game
+<h5>How to play the game</h5>
 When the game is first started there is a main menu with two options (GAME and PRACTICE). Use DIP switch 0 (sw0) to switch between the two options. Once you have decided on which option you want to play, press pushbutton 0 (bt0) to start playing. Use the mouse to move your bottom tank left and right, press the left click button to shoot a bullet at the top tanks. At any time during gameplay you can press and hold pushbutton 2 (bt2) to pause the game. Also at anytime during gameplay and also once you’ve reached the game over/won screens you can press pushbutton 1 (bt1) to reset/ return to the main menu
