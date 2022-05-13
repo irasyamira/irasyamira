@@ -6,8 +6,8 @@ from flask import Flask, request, redirect
 
 app = Flask(__name__)
 
-srcPath='/home/arimaysari/irasyamira-flask/src/'
-dbPath='/home/arimaysari/irasyamira-flask/db/irasyamira-flask.db'
+srcPath='/home/arimaysari/irasyamira/src/'
+dbPath='/home/arimaysari/irasyamira/db/irasyamira.db'
 
 headerObject0={'tag':'home','link':'/'}
 headerObject1={'tag':'about','link':'/about'}
@@ -93,7 +93,11 @@ def hello_world(page=None,subpage=None):
         contentObj=reviewEntry()
         twoColumns=False
     elif (page=='editDatabase'):
-        contentObj=landing(editDatabase())
+            if editDatabase():
+                #contentObj=landing(True)
+                return redirect("/")
+            else:
+                return redirect("/")
     elif (page=='home'):
         return redirect("/")
     else:
