@@ -100,6 +100,10 @@ def hello_world(page=None,subpage=None):
                 return redirect("/")
     elif (page=='home'):
         return redirect("/")
+    elif (page=='posts'):
+        if subpage==None:
+            subpage=8
+        contentObj=posts(subpage)
     else:
         contentObj=landing()
 
@@ -222,6 +226,25 @@ def guestbook(alert=None):
         content='fail -'+str(e)
     panel0=content
     return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+
+# TODO function type: render page
+def posts(subpage=None):
+    folder='posts'
+    errorCode=True
+    errorMessage=None
+    pageName='Posts'
+    panel0=panel1=''
+    try:
+        if subpage:
+            panel0=listEntries('posts',0,1,subpage)
+        else:
+            panel0=renderHtml('posts',folder)
+        panel1=listEntries('posts',0,0,subpage)
+    except Exception as e:
+        #errorMessage=str(e)
+        panel0='fail -'+str(e)
+    return {'panel0':panel1,'panel1':panel0,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+
 
 # function type: operational
 def convertArrayToObject(obj,table):
