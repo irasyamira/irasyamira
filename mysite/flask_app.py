@@ -40,7 +40,11 @@ dbTableObj2a=['row_id','publishStatusTag','dateAdded','category','displayOrder',
 dbTableObj2b={0:{'tag':0,'label':'Introduction'},3:{'tag':3,'label':'Primary/Secondary Education'},2:{'tag':2,'label':'Tertiary Education'},1:{'tag':1,'label':'Professional Experience'}}
 dbTableObject2={'tag':2,'tableName':'about','columns':dbTableObj2a,'grouping':dbTableObj2b,'sortBy':'category','sortBy1':'displayOrder','sortBy1Order':'ASC','sortByOrder':'ASC'}
 
-dbTableArray=[dbTableObject0,dbTableObject1,dbTableObject2]
+dbTableObj3a=['row_id','publishStatusTag','dateAdded','category','displayOrder','file','title','link','skills','media','epochTime']
+dbTableObj3b={0:{'tag':0,'label':'Introduction'},2:{'tag':2,'label':'Embedded Systems'},1:{'tag':1,'label':'Software Development'},3:{'tag':3,'label':'Hardware Programming'}}
+dbTableObject3={'tag':1,'tableName':'posts','columns':dbTableObj1a,'grouping':dbTableObj1b,'sortBy':'category','sortBy1':'displayOrder','sortBy1Order':'ASC','sortByOrder':'ASC'}
+
+dbTableArray=[dbTableObject0,dbTableObject1,dbTableObject2,dbTableObject3]
 
 '''
 guestbookTableKey0={'tag':0,'displayName':'row_id','render':0,'inputTypeTag':1}

@@ -526,3 +526,38 @@ div#projects img {
     }
 
 }
+
+/*================================================================*/
+/* POSTS */
+/*================================================================*/
+
+div#posts .sidebar {
+    width: 30%;
+}
+
+div#posts .content {
+    width: 70%;
+}
+
+div#posts a:hover {
+    color: var(--colour2);
+}
+
+div#posts img {
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-bottom: 2%;
+    padding-top: 1%;
+    padding: 0;
+}
+
+@media screen and (max-width: 960px) {
+    div#posts .content {
+        width: 100%;
+    }
+
+    div#posts .sidebar {
+        width: 100%;
+    }
+
+}
