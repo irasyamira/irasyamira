@@ -1,6 +1,8 @@
 # A very simple Flask Hello World app for you to get started with...
 import time
 import sqlite3
+import smtplib
+from email.message import EmailMessage
 from datetime import datetime
 from flask import Flask, request, redirect
 
@@ -33,7 +35,7 @@ dbTableObj0b={0:{'label':'family','symbol':'👪'},1:{'label':'primary school','
 dbTableObject0={'tag':0,'tableName':'guestbook','columns':dbTableObj0a,'grouping':dbTableObj0b,'sortBy':'epochTime','sortBy1':'category','sortBy1Order':'ASC','sortByOrder':'DESC'}
 
 dbTableObj1a=['row_id','publishStatusTag','dateAdded','category','displayOrder','file','title','link','skills','media','epochTime']
-dbTableObj1b={0:{'tag':0,'label':'Introduction'},2:{'tag':2,'label':'Embedded Systems'},1:{'tag':1,'label':'Software Development'},3:{'tag':3,'label':'Hardware Programming'}}
+dbTableObj1b={0:{'tag':0,'label':'Introduction'},3:{'tag':3,'label':'Embedded Systems'},2:{'tag':2,'label':'Software Development'},4:{'tag':4,'label':'Hardware Programming'},1:{'tag':1,'label':'Extracurricular'}}
 dbTableObject1={'tag':1,'tableName':'projects','columns':dbTableObj1a,'grouping':dbTableObj1b,'sortBy':'category','sortBy1':'displayOrder','sortBy1Order':'ASC','sortByOrder':'ASC'}
 
 dbTableObj2a=['row_id','publishStatusTag','dateAdded','category','displayOrder','file','title','duration','position','link','media','epochTime']
@@ -95,6 +97,9 @@ def hello_world(page=None,subpage=None):
         contentObj=projects(subpage)
     elif (page=='reviewEntry'):
         contentObj=reviewEntry()
+        twoColumns=False
+    elif (page=='test'):
+        contentObj=testNewFeature()
         twoColumns=False
     elif (page=='editDatabase'):
             if editDatabase():
@@ -186,6 +191,40 @@ def about(subpage=None):
         errorMessage=str(e)
 
     return {'panel0':panel1,'panel1':panel0,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+
+def testNewFeature(subpage=None):
+    errorCode=True
+    errorMessage=None
+    pageName='testing'
+    panel0=panel1=''
+
+    try:
+        sendEmail()
+        panel0='panel 0: success!'
+        panel1='panel 1: success!'
+    except Exception as e:
+        panel0='panel 0: error sending email due to {}'.format(e)
+        panel1='panel 1: error sending email due to {}'.format(e)
+
+    return {'panel0':panel0,'panel1':panel1,'pageName':pageName,'errorCode':errorCode,'errorMessage':errorMessage}
+
+def sendEmail(message):
+    # set your email and password
+    # please use App Password
+    email_address="irasyamira@gmail.com"
+    email_password="kcanivafkwrwhodk"
+
+    # create email
+    msg = EmailMessage()
+    msg['Subject'] = "IRASYAMIRA.COM - New Notification"
+    msg['From'] = email_address
+    msg['To'] = "irasyamira.min@gmail.com"
+    msg.set_content(message)
+
+    # send email
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+        smtp.login(email_address, email_password)
+        smtp.send_message(msg)
 
 # function type: render page
 def projects(subpage=None):
@@ -356,6 +395,7 @@ def reviewEntry():
         displayDateAdded=datetime.today().strftime('%Y%m%d')
         content+=renderHtml('reviewEntry',folder).format(symbol=symbol,sender=sender,displayDateAdded=displayDateAdded,message=message,publishStatusTag=1,dateAdded=displayDateAdded,category=category,others=None)
         errorCode=False
+        sendEmail('New message drafted in the Guestbook by {} saying "{}"!'.format(sender,message))
     except Exception as e:
         errorMessage=str(e)
         content='fail -'+str(e)
@@ -390,6 +430,7 @@ def editDatabase(table='guestbook',newEntry=False):
             guestbookDb.commit()
             errorCode=False
             content='success!'
+            sendEmail('New message received in the Guestbook by {} saying "{}"!'.format(sender,message))
         except Exception as e:
             #errorMessage=str(e)
             content='fail to commit to db -'+str(e)
