@@ -35,7 +35,7 @@ dbTableObj0b={0:{'label':'family','symbol':'👪'},1:{'label':'primary school','
 dbTableObject0={'tag':0,'tableName':'guestbook','columns':dbTableObj0a,'grouping':dbTableObj0b,'sortBy':'epochTime','sortBy1':'category','sortBy1Order':'ASC','sortByOrder':'DESC'}
 
 dbTableObj1a=['row_id','publishStatusTag','dateAdded','category','displayOrder','file','title','link','skills','media','epochTime']
-dbTableObj1b={0:{'tag':0,'label':'Introduction'},3:{'tag':3,'label':'Embedded Systems'},2:{'tag':2,'label':'Software Development'},4:{'tag':4,'label':'Hardware Programming'},1:{'tag':1,'label':'Extracurricular'}}
+dbTableObj1b={0:{'tag':0,'label':'Introduction'},3:{'tag':3,'label':'Embedded Systems'},2:{'tag':2,'label':'Web/Software Development'},4:{'tag':4,'label':'Hardware Programming'},1:{'tag':1,'label':'Extracurricular'}}
 dbTableObject1={'tag':1,'tableName':'projects','columns':dbTableObj1a,'grouping':dbTableObj1b,'sortBy':'category','sortBy1':'displayOrder','sortBy1Order':'ASC','sortByOrder':'ASC'}
 
 dbTableObj2a=['row_id','publishStatusTag','dateAdded','category','displayOrder','file','title','duration','position','link','media','epochTime']
@@ -412,6 +412,7 @@ def editDatabase(table='guestbook',newEntry=False):
     content=''
 
     try:
+        temp=''
         content+='sender'
         sender=request.form['sender']
         content+='publishStatusTag'
@@ -425,12 +426,15 @@ def editDatabase(table='guestbook',newEntry=False):
         content+='message'
         message=request.form['message']
         epochTime=time.time()
+        #if len(message)>300:
+        #    publishStatusTag='0'
+        #    temp='long '
         try:
             db1.execute('INSERT INTO {table} (sender,publishStatusTag,dateAdded,category,others,message,epochTime) VALUES (?,?,?,?,?,?,?);'.format(table=table), (sender,publishStatusTag,dateAdded,category,others,message,epochTime,))
             guestbookDb.commit()
             errorCode=False
             content='success!'
-            sendEmail('New message received in the Guestbook by {} saying "{}"!'.format(sender,message))
+            sendEmail('New {}message received in the Guestbook by {} saying "{}"!'.format(temp,sender,message))
         except Exception as e:
             #errorMessage=str(e)
             content='fail to commit to db -'+str(e)
